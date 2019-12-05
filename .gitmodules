@@ -1,0 +1,3 @@
+[submodule "/home/cunderw/.vim/pack/plugins/start/lightline"]
+	path = /home/cunderw/.vim/pack/plugins/start/lightline
+	url = https://github.com/itchyny/lightline.vim
