@@ -4,8 +4,8 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule "/home/cunderw/.powerlevel10k"]
-	path = /home/cunderw/.powerlevel10k
+[submodule ".powerlevel10k"]
+	path = .powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
 [submodule ".zsh-syntax-highlighting"]
 	path = .zsh-syntax-highlighting
