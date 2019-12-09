@@ -3,7 +3,7 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
