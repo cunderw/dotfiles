@@ -64,7 +64,6 @@ plugins=(
   sudo
   systemd
   vscode
-  websearch
   wd
 )
 source $ZSH/oh-my-zsh.sh
@@ -81,6 +80,7 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias diskspace="du -S | sort -n -r | less"
 
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
 
 # Easy way to extract archives
 extract () {
