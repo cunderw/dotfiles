@@ -13,3 +13,6 @@
 [submodule ".zsh-autosuggestions"]
 	path = .zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule ".vim/pack/plugins/start/vim-javascript"]
+	path = .vim/pack/plugins/start/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
