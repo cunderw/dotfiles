@@ -18,7 +18,7 @@ set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 set laststatus=2
 set ruler
-
+set expandtab
 if &t_Co >= 256 || has("gui_running")
     colorscheme atom
 endif
