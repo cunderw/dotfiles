@@ -29,6 +29,7 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'jceb/vim-orgmode'
 
 " Generic Programming Support 
+Plugin 'jakedouglas/exuberant-ctags'
 Plugin 'honza/vim-snippets'
 Plugin 'Townk/vim-autoclose'
 Plugin 'tomtom/tcomment_vim'
