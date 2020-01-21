@@ -10,6 +10,6 @@
 [submodule ".zsh-autosuggestions"]
 	path = .zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "/Users/cunderw/.vim/bundle/Vundle.vim"]
-	path = /Users/cunderw/.vim/bundle/Vundle.vim
+[submodule ".vim/bundle/Vundle.vim"]
+	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
