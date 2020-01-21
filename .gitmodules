@@ -1,6 +1,3 @@
-[submodule ".vim/pack/plugins/start/lightline"]
-	path = .vim/pack/plugins/start/lightline
-	url = https://github.com/itchyny/lightline.vim
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
@@ -13,6 +10,6 @@
 [submodule ".zsh-autosuggestions"]
 	path = .zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule ".vim/pack/plugins/start/vim-javascript"]
-	path = .vim/pack/plugins/start/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
+[submodule "/Users/cunderw/.vim/bundle/Vundle.vim"]
+	path = /Users/cunderw/.vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
