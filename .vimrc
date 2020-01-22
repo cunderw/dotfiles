@@ -1,6 +1,6 @@
 set encoding=utf8
 
-"""" START Vundle Configuration 
+"""" START Vundle Configuration
 
 " Disable file type for vundle
 filetype off                  " required
@@ -14,6 +14,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Utility
 Plugin 'scrooloose/nerdtree'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'majutsushi/tagbar'
 Plugin 'ervandew/supertab'
 Plugin 'BufOnly.vim'
@@ -28,14 +29,19 @@ Plugin 'gilsondev/searchtasks.vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'jceb/vim-orgmode'
 
-" Generic Programming Support 
+" Generic Programming Support
 Plugin 'universal-ctags/ctags'
 Plugin 'honza/vim-snippets'
 Plugin 'Townk/vim-autoclose'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tobyS/vmustache'
-Plugin 'maksimr/vim-jsbeautify'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'prettier/vim-prettier'
+" Javascript
+Plugin 'pangloss/vim-javascript'
+Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'maksimr/vim-jsbeautify'
 
 " Git Support
 Plugin 'kablamo/vim-git-log'
@@ -43,11 +49,11 @@ Plugin 'gregsexton/gitv'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'othree/javascript-libraries-syntax.vim'
+
 " PHP Support
 "Plugin 'phpvim/phpcd.vim'
 Plugin 'tobyS/pdv'
 
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " Themes & Interface
 Plugin 'ryanoasis/vim-devicons'
@@ -58,7 +64,7 @@ Plugin 'joshdick/onedark.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
-"""" END Vundle Configuration 
+"""" END Vundle Configuration
 
 """""""""""""""""""""""""""""""""""""
 " Configuration Section
@@ -83,31 +89,28 @@ set laststatus=2
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1
 
-" Devicons configuration 
+" Devicons configuration
 let g:webdevicons_conceal_nerdtree_brackets = 1
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ''
 
 " Enable highlighting of the current line
 set cursorline
 
-" Theme and Styling 
+" Theme and Styling
 syntax on
 set t_Co=256
-
-" if (has("termguicolors"))
-"   set termguicolors
-" endif
-
 colorscheme onedark
 
-
+" Javascript Config
+let g:vim_jsx_pretty_colorful_config = 1
+let g:used_javascript_libs = 'react'
 
 " Vim-Airline Configuration
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1 
-let g:airline_theme='onedark'
+let g:airline_powerline_fonts = 1
+let g:airline_theme ='onedark'
 let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1 
+let g:hybrid_reduced_contrast = 1
 
 " Syntastic Configuration
 set statusline+=%#warningmsg#
@@ -118,7 +121,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 
-" Vim-PDV Configuration 
+" Vim-PDV Configuration
 let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
 
 " Vim-Supertab Configuration
@@ -135,30 +138,21 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-" Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
+    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+    " For no inserting <CR> key.
+    "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
-
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -166,24 +160,17 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
+    let g:neocomplete#sources#omni#input_patterns = {}
 endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+" fzf config
 " This is the default extra key bindings
 let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-x': 'split',
+            \ 'ctrl-v': 'vsplit' }
 
 " Default fzf layout
 " - down / up / left / right
@@ -191,27 +178,24 @@ let g:fzf_layout = { 'down': '~40%' }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+            \ { 'fg':      ['fg', 'Normal'],
+            \ 'bg':      ['bg', 'Normal'],
+            \ 'hl':      ['fg', 'Comment'],
+            \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+            \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+            \ 'hl+':     ['fg', 'Statement'],
+            \ 'info':    ['fg', 'PreProc'],
+            \ 'prompt':  ['fg', 'Conditional'],
+            \ 'pointer': ['fg', 'Exception'],
+            \ 'marker':  ['fg', 'Keyword'],
+            \ 'spinner': ['fg', 'Label'],
+            \ 'header':  ['fg', 'Comment'] }
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
 " previous-history instead of down and up. If you don't like the change,
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-" jslibs
-let g:used_javascript_libs = 'react'
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
@@ -244,7 +228,7 @@ xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
 " Shortcuts
-nnoremap <Leader>o :Files<CR> 
+nnoremap <Leader>o :Files<CR>
 nnoremap <Leader>O :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
 
@@ -261,10 +245,10 @@ autocmd FileType php setlocal omnifunc=phpcd#CompletePHP
 
 " Disable arrow movement, resize splits instead.
 if get(g:, 'elite_mode')
-	nnoremap <Up>    :resize +2<CR>
-	nnoremap <Down>  :resize -2<CR>
-	nnoremap <Left>  :vertical resize +2<CR>
-	nnoremap <Right> :vertical resize -2<CR>
+    nnoremap <Up>    :resize +2<CR>
+    nnoremap <Down>  :resize -2<CR>
+    nnoremap <Left>  :vertical resize +2<CR>
+    nnoremap <Right> :vertical resize -2<CR>
 endif
 
 map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
