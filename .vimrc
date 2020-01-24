@@ -1,5 +1,9 @@
 set encoding=utf8
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
 """" START Vundle Configuration
 
 " Disable file type for vundle
@@ -38,17 +42,23 @@ Plugin 'tobyS/vmustache'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'prettier/vim-prettier'
+Plugin 'tmhedberg/SimpylFold'
+
 " Javascript
 Plugin 'pangloss/vim-javascript'
 Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'maksimr/vim-jsbeautify'
+Plugin 'othree/javascript-libraries-syntax.vim'
+
+" Python
+Plugin 'vim-scripts/indentpython.vim'
+
 
 " Git Support
 Plugin 'kablamo/vim-git-log'
 Plugin 'gregsexton/gitv'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'othree/javascript-libraries-syntax.vim'
 
 " PHP Support
 "Plugin 'phpvim/phpcd.vim'
@@ -83,8 +93,13 @@ set shiftwidth=4
 set smarttab
 set expandtab
 
+" Pythong auto-indent
+
 " Always display the status line
 set laststatus=2
+
+" system clipboard
+set clipboard=unnamed
 
 " Enable Elite mode, No ARRRROWWS!!!!
 let g:elite_mode=1
@@ -255,3 +270,12 @@ map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
 
 " Advanced customization using autoload functions
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable folding with the spacebar
+nnoremap <space> za
