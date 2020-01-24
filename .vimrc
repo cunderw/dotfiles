@@ -43,6 +43,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'prettier/vim-prettier'
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'valloric/youcompleteme'
 
 " Javascript
 Plugin 'pangloss/vim-javascript'
@@ -53,6 +54,8 @@ Plugin 'othree/javascript-libraries-syntax.vim'
 " Python
 Plugin 'vim-scripts/indentpython.vim'
 
+" Unity / C#
+Plugin 'OmniSharp/omnisharp-vim'
 
 " Git Support
 Plugin 'kablamo/vim-git-log'
@@ -212,6 +215,9 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+" omnisharp config
+ let g:OmniSharp_server_use_mono = 1
+
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
 """""""""""""""""""""""""""""""""""""
@@ -278,4 +284,4 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Enable folding with the spacebar
-nnoremap <space> za
+noremap <space> za
