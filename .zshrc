@@ -81,7 +81,8 @@ alias diskspace="du -S | sort -n -r | less"
 
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
-
+alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
+alias glog="git log --all --decorate --oneline --graph"
 # Easy way to extract archives
 extract () {
    if [ -f $1 ] ; then
