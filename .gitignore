@@ -1,0 +1,7 @@
+*~
+.cache/
+.ssh/
+.tmux/
+.vim/
+.viminfo
+.zsh_history

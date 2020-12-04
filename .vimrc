@@ -44,10 +44,6 @@ Plugin 'gregsexton/gitv'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
-" PHP Support
-"Plugin 'phpvim/phpcd.vim'
-Plugin 'tobyS/pdv'
-
 
 " Themes & Interface
 Plugin 'ryanoasis/vim-devicons'
@@ -70,13 +66,14 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""
 set nowrap
 
-
 " Show linenumbers
 set number
 
-" Set Proper Tabs
-set tabstop=4
-set shiftwidth=4
+
+
+" Set Proper Tab
+set tabstop=2
+set shiftwidth=2
 set smarttab
 set expandtab
 
@@ -123,38 +120,15 @@ let g:syntastic_check_on_open = 1
 
 """""""""""""""""""""""""""""""""""""
 " Mappings configurationn
-"""""""""""""""""""""""""""""""""""""
+"""""""""
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :TagbarToggle<CR>
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-" Mapping selecting Mappings
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
-" Shortcuts
-nnoremap <Leader>o :Files<CR>
-nnoremap <Leader>O :CtrlP<CR>
 nnoremap <Leader>w :w<CR>
-
-map <silent> <LocalLeader>ws :highlight clear ExtraWhitespace<CR>
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-" Enable folding with the spacebar
-noremap <space> za
+set nocompatible
