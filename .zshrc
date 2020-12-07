@@ -33,7 +33,7 @@ COMPLETION_WAITING_DOTS="true"
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-
+ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -101,8 +101,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.powerlevel10k/powerlevel10k.zsh-theme
+# source ~/.powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 POWERLEVEL9K_DISABLE_GITSTATUS=true
+#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
