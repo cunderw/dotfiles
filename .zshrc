@@ -108,6 +108,8 @@ source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
 POWERLEVEL9K_DISABLE_GITSTATUS=true
 #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# To customize prompt, run `p10k configure` or edit /mnt/user/dotfiles/.p10k.zsh.
+[[ ! -f /mnt/user/dotfiles/.p10k.zsh ]] || source /mnt/user/dotfiles/.p10k.zsh
