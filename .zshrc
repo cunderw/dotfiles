@@ -83,6 +83,9 @@ alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1
 alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
 alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
 alias glog="git log --all --decorate --oneline --graph"
+alias dotsupdate="dotfiles pull && dotfiles submodule update"
+alias zshreload="source ~/.zshrc"
+alias zshconfig="vim ~/.zshrc"
 # Easy way to extract archives
 extract () {
    if [ -f $1 ] ; then
