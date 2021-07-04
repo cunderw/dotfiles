@@ -13,6 +13,9 @@
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
-[submodule "/Users/cunderw/.tmux/plugins/tpm"]
-	path = /Users/cunderw/.tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+    url = https://github.com/tmux-plugins/tpm
+[submodule ".zsh/zsh-dircolors-nord"]                                                                                    
+    path  = .zsh/zsh-dircorlors-nord
+    tab  = https://github.com/coltondick/zsh-dircolors-nord.git
