@@ -13,8 +13,6 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-GITSTATUS_LOG_LEVEL=DEBUG
-
 # Auto start / attach tmux when connecting over ssh
 if [[ -n $SSH_CONNECTION ]]; then
 	ZSH_TMUX_AUTOSTART="true"
@@ -51,7 +49,6 @@ source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # User configuration
 export EDITOR='vim'
-
 
 # aliass
 alias dots='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
