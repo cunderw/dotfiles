@@ -64,6 +64,8 @@ alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
 
+# expand aliases with tab
+zstyle ':completion:*' completer _expand_alias _complete _ignored
 # functions and other sources
 # Easy way to extract archives
 extract () {
