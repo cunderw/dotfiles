@@ -13,11 +13,6 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Auto start / attach tmux when connecting over ssh
-if [[ -n $SSH_CONNECTION ]]; then
-	ZSH_TMUX_AUTOSTART="true"
-fi
-
 # plugins
 plugins=(
   git
