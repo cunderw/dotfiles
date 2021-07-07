@@ -21,10 +21,10 @@ fi
 # plugins
 plugins=(
   git
-  yarn 
-  web-search 
+  yarn
+  web-search
   jsontools
-  node 
+  node
   sudo
   thor
   docker
@@ -44,8 +44,6 @@ plugins=(
   wd
 )
 source $ZSH/oh-my-zsh.sh
-
-source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # User configuration
 export EDITOR='vim'
@@ -100,5 +98,7 @@ fi
 
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh-vim-mode/zsh-vim-mode.plugin.zsh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

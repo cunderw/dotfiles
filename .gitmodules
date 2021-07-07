@@ -19,6 +19,6 @@
 [submodule ".zsh/zsh-dircolors-nord"]                                                                                    
     path  = .zsh/zsh-dircorlors-nord
     tab  = https://github.com/coltondick/zsh-dircolors-nord.git
-[submodule "/Users/cunderw/.tmux/plugins/tpm"]
-	path = /Users/cunderw/.tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
+[submodule ".zsh-vim-mode"]
+	path = .zsh-vim-mode
+	url = https://github.com/softmoth/zsh-vim-mode.git
