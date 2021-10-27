@@ -20,9 +20,9 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Utility
-Plugin 'scrooloose/nerdtree'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'majutsushi/tagbar'
+Plugin 'kyazdani42/nvim-web-devicons'
+Plugin 'kyazdani42/nvim-tree.lua'
 
 " Generic Programming Support
 Plugin 'universal-ctags/ctags'
@@ -38,12 +38,13 @@ Plugin 'maxmellon/vim-jsx-pretty'
 Plugin 'dense-analysis/ale'
 Plugin 'eslint/eslint'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
 " Git Support
 Plugin 'kablamo/vim-git-log'
 Plugin 'airblade/vim-gitgutter'
 
 " Themes & Interface
-Plugin 'arcticicestudio/nord-vim'
+Plugin 'gertjanreynaert/cobalt2-vim-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -78,7 +79,7 @@ set cursorline
 " Theme and Styling
 syntax on
 set t_Co=256
-colorscheme nord
+colorscheme cobalt2
 
 " Set file ignore QOL
 set wildignore=*.o,*~,*.pyc
@@ -109,7 +110,7 @@ set statusline+=%*
 " Vim-Airline Configuration
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme ='base16_nord'
+let g:airline_theme ='cobalt2'
 
 " Syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -159,9 +160,8 @@ endif
 """""""""""""""""""""""""""""""""""""
 " Key Mappings configurationn
 """""""""""""""""""""""""""""""""""""
-map <C-n> :NERDTreeToggle<CR>
 map <C-m> :TagbarToggle<CR>
-
+map <C-n> :NvimTreeToggle<CR>
 let mapleader = ","
 
 " Fast saving

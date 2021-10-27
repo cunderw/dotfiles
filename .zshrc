@@ -1,16 +1,10 @@
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export ZSH=$HOME/.oh-my-zsh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+export ZSH_THEME="cobalt2"
 
-# Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # plugins
@@ -41,7 +35,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # aliass
 alias dots='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -53,9 +47,11 @@ alias glog="git log --all --decorate --oneline --graph"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
+alias vim="nvim"
 
 # expand aliases with tab
 zstyle ':completion:*' completer _expand_alias _complete _ignored
+
 # functions and other sources
 # Easy way to extract archives
 extract () {
@@ -97,3 +93,7 @@ source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh-vim-mode/zsh-vim-mode.plugin.zsh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
