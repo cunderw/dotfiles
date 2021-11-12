@@ -1,15 +1,3 @@
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule ".powerlevel10k"]
-	path = .powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
-[submodule ".zsh-syntax-highlighting"]
-	path = .zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule ".zsh-autosuggestions"]
-	path = .zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
@@ -19,6 +7,3 @@
 [submodule ".zsh/zsh-dircolors-nord"]                                                                                    
     path  = .zsh/zsh-dircorlors-nord
     tab  = https://github.com/coltondick/zsh-dircolors-nord.git
-[submodule ".zsh-vim-mode"]
-	path = .zsh-vim-mode
-	url = https://github.com/softmoth/zsh-vim-mode.git

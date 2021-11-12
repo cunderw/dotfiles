@@ -1,43 +1,65 @@
+############################
+# Environment Setup
+############################
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export ZSH=$HOME/.oh-my-zsh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-export ZSH_THEME="cobalt2"
+export EDITOR='nvim'
+export NVM_DIR="$HOME/.nvm"
+
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# plugins
-plugins=(
-  git
-  yarn
-  web-search
-  jsontools
-  node
-  sudo
-  thor
-  docker
-  tmux
-  command-not-found
-  common-aliases
-  copyfile
-  debian
-  httpie
-  jira
-  node
-  npm
-  osx
-  sudo
-  systemd
-  vscode
-  wd
-)
-source $ZSH/oh-my-zsh.sh
 
-# User configuration
-export EDITOR='nvim'
+############################
+# Setup antigen and plugins
+############################
+source $HOME/.antigen.zsh
 
+antigen use oh-my-zsh
+
+# oh-my-zsh
+antigen bundle git
+antigen bundle yarn
+antigen bundle web-search
+antigen bundle jsontools
+antigen bundle node
+antigen bundle npm
+antigen bundle sudo
+antigen bundle docker
+antigen bundle tmux
+antigen bundle command-not-found
+antigen bundle common-aliases
+antigen bundle copyfile
+antigen bundle debian
+antigen bundle macOS
+antigen bundle sudo
+antigen bundle systemd
+antigen bundle vscode
+antigen bundle zsh-interactive-cd
+antigen bundle colored-man-pages
+
+# others
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle arzzen/calc.plugin.zsh
+
+
+antigen theme romkatv/powerlevel10k
+
+antigen apply
+
+############################
 # aliass
+############################
 alias dots='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias diskspace="du -S | sort -n -r | less"
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
@@ -49,10 +71,9 @@ alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
 alias vim="nvim"
 
-# expand aliases with tab
-zstyle ':completion:*' completer _expand_alias _complete _ignored
-
-# functions and other sources
+############################
+# Utilities
+############################
 # Easy way to extract archives
 extract () {
    if [ -f $1 ] ; then
@@ -78,22 +99,5 @@ extract () {
 # Move 'up' so many directories instead of using several cd ../../, etc.
 up() { cd $(eval printf '../'%.0s {1..$1}) && pwd; }
 
-source ~/scripts/sourced/goto.sh
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-source ~/.powerlevel10k/powerlevel10k.zsh-theme
-source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh-vim-mode/zsh-vim-mode.plugin.zsh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

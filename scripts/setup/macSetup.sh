@@ -64,11 +64,50 @@ defaults write com.apple.dock wvous-tl-modifier -int 0
 echo "Disable re-arraange spaces"
 defaults write com.apple.dock mru-spaces -bool false
 
-echo "Show only active app"
-defaults write com.apple.dock static-only -bool true && \
+echo "Disable auto-correct"
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+#####################
+# Finder
+#####################
+echo "Finder: show hidden files by default"
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+echo "Finder: show all filename extensions"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+echo "Finder: show path bar"
+defaults write com.apple.finder ShowPathbar -boolean true
+
+echo "# Disable the warning when changing a file extension"
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+###############################################################################
+# Safari & WebKit                                                             #
+###############################################################################
+
+echo "Set Safari’s home page to `about:blank` for faster loading"
+defaults write com.apple.Safari HomePage -string "about:blank"
+
+echo "Enable Safari’s debug menu"
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+# Make Safari’s search banners default to Contains instead of Starts With
+defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+
+
+echo "Enabe the Develop menu and the Web Inspector in Safari"
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+
+echo "Add a context menu item for showing the Web Inspector in web views"
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+echo "Enable the WebKit Developer Tools in the Mac App Store"
+defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 
 
 echo "Restarting finder and dock to apply changes"
 killall Finder
-rm ~/Library/Application\ Support/Dock/*.sidebarlists
 killall Dock

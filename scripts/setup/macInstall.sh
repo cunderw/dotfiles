@@ -10,6 +10,7 @@ brew install tmux
 brew install ctags
 brew install cmake3
 brew install wget
+brew install fzf
 
 # casks
 brew tap homebrew/cask-fonts
