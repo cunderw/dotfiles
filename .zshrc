@@ -21,37 +21,37 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ############################
 # Setup antigen and plugins
 ############################
-source $HOME/.antigen.zsh
+source $HOME/antigen.zsh
 
 antigen use oh-my-zsh
 
 # oh-my-zsh
-antigen bundle git
-antigen bundle yarn
-antigen bundle web-search
-antigen bundle jsontools
-antigen bundle node
-antigen bundle npm
-antigen bundle sudo
-antigen bundle docker
-antigen bundle tmux
+
+antigen bundle colored-man-pages
 antigen bundle command-not-found
 antigen bundle common-aliases
 antigen bundle copyfile
 antigen bundle debian
+antigen bundle docker
+antigen bundle git
+antigen bundle jsontools
 antigen bundle macOS
+antigen bundle node
+antigen bundle npm
+antigen bundle sudo
 antigen bundle sudo
 antigen bundle systemd
+antigen bundle tmux
 antigen bundle vscode
+antigen bundle web-search
+antigen bundle yarn
 antigen bundle zsh-interactive-cd
-antigen bundle colored-man-pages
 
 # others
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle arzzen/calc.plugin.zsh
-
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen theme romkatv/powerlevel10k
 
