@@ -45,10 +45,8 @@ antigen bundle tmux
 antigen bundle vscode
 antigen bundle web-search
 antigen bundle yarn
-antigen bundle zsh-interactive-cd
 
 # others
-antigen bundle arzzen/calc.plugin.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -60,7 +58,7 @@ antigen apply
 ############################
 # aliass
 ############################
-alias dots='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias diskspace="du -S | sort -n -r | less"
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"

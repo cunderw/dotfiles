@@ -45,6 +45,7 @@ Plugin 'airblade/vim-gitgutter'
 
 " Themes & Interface
 Plugin 'gertjanreynaert/cobalt2-vim-theme'
+Plugin 'dracula/vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -79,7 +80,7 @@ set cursorline
 " Theme and Styling
 syntax on
 set t_Co=256
-colorscheme cobalt2
+colorscheme dracula
 
 " Set file ignore QOL
 set wildignore=*.o,*~,*.pyc
@@ -110,7 +111,7 @@ set statusline+=%*
 " Vim-Airline Configuration
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme ='cobalt2'
+let g:airline_theme ='dracula'
 
 " Syntastic
 let g:syntastic_always_populate_loc_list = 1
