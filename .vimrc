@@ -24,27 +24,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'kyazdani42/nvim-web-devicons'
 Plugin 'kyazdani42/nvim-tree.lua'
 
-" Generic Programming Support
-Plugin 'universal-ctags/ctags'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'valloric/youcompleteme'
-
-" Typescript, js, node, and react support
-Plugin 'HerringtonDarkholme/yats.vim'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'dense-analysis/ale'
-Plugin 'eslint/eslint'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Git Support
-Plugin 'kablamo/vim-git-log'
-Plugin 'airblade/vim-gitgutter'
 
 " Themes & Interface
-Plugin 'gertjanreynaert/cobalt2-vim-theme'
 Plugin 'dracula/vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -119,37 +100,12 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" UultiSnips
-let g:UltiSnipsExpandTrigger="<shift-space>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" Typescript, etc..
-let g:jsx_ext_required = 0
-
-let g:ale_linters = {
-\   'javascript': ['standard'],
-\}
-let g:ale_fixers = {
-\   'javascript': ['prettier', 'eslint'],
-\   'typescript': ['prettier', 'eslint'],
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\}
-
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
-let g:ale_linters_explicit = 1
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-let g:coc_global_extensions = [
-  \ 'coc-tsserver'
-  \ ]
+
+
 if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
   let g:coc_global_extensions += ['coc-prettier']
 endif
