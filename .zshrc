@@ -5,6 +5,8 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export EDITOR='nvim'
 export NVM_DIR="$HOME/.nvm"
+export GOPATH="$HOME/go"
+export PATH=$PATH:$GOPATH/bin
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -67,7 +69,7 @@ alias glog="git log --all --decorate --oneline --graph"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
-alias vim="nvim"
+alias vim="$HOME/.local/bin/lvim"
 
 ############################
 # Utilities
