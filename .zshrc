@@ -33,14 +33,18 @@ antigen bundle common-aliases
 antigen bundle copyfile
 antigen bundle debian
 antigen bundle docker
+antigen bundle docker-compose
+antigen bundle dotenv
 antigen bundle git
 antigen bundle jsontools
 antigen bundle macOS
 antigen bundle node
 antigen bundle npm
-antigen bundle sudo
-antigen bundle sudo
+antigen bundle nvm
+antigen bundle pylint
+antigen bundle python
 antigen bundle systemd
+antigen bundle thefuck
 antigen bundle tmux
 antigen bundle vscode
 antigen bundle web-search
@@ -67,7 +71,9 @@ alias glog="git log --all --decorate --oneline --graph"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
-alias vim="nvim"
+alias vim="$HOME/.local/bin/lvim"
+
+eval $(thefuck --alias)
 
 ############################
 # Utilities
