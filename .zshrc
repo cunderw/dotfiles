@@ -1,6 +1,7 @@
 ############################
 # Environment Setup
 ############################
+source $HOME/.secrets
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export EDITOR='nvim'
@@ -35,14 +36,19 @@ antigen bundle common-aliases
 antigen bundle copyfile
 antigen bundle debian
 antigen bundle docker
+antigen bundle docker-compose
+antigen bundle dotenv
 antigen bundle git
+antigen bundle go
 antigen bundle jsontools
 antigen bundle macOS
 antigen bundle node
 antigen bundle npm
-antigen bundle sudo
-antigen bundle sudo
+antigen bundle nvm
+antigen bundle pylint
+antigen bundle python
 antigen bundle systemd
+antigen bundle thefuck
 antigen bundle tmux
 antigen bundle vscode
 antigen bundle web-search
@@ -70,6 +76,8 @@ alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
 alias vim="$HOME/.local/bin/lvim"
+
+eval $(thefuck --alias)
 
 ############################
 # Utilities
