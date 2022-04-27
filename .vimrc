@@ -31,7 +31,6 @@ set cursorline
 " Theme and Styling
 syntax on
 set t_Co=256
-colorscheme dracula
 
 " Set file ignore QOL
 set wildignore=*.o,*~,*.pyc
@@ -51,8 +50,4 @@ set incsearch
 set ai
 set si
 
-" Status line additions
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
