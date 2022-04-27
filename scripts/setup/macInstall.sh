@@ -26,8 +26,4 @@ nvm use 16
 # python package installs
 pip3 install pynvim
 
-cd ~/.vim/bundle/coc.mvim && npm install
-
-cd ~
-
-~/.vim/bundle/youcompleteme/install.py
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
