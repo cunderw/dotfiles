@@ -143,7 +143,8 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- Additional Plugins
 lvim.plugins = {
-  {"Mofiqul/dracula.nvim"}
+  {"Mofiqul/dracula.nvim"},
+  {"christoomey/vim-tmux-navigator"},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
