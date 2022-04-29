@@ -1,7 +1,6 @@
 ############################
 # Environment Setup
 ############################
-source $HOME/.secrets
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export EDITOR='nvim'
@@ -13,59 +12,23 @@ export DISABLE_AUTO_TITLE=true
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+############################
+# Sourced Files / Utilities
+############################
+for f in ~/.scripts/sourced/*; do
+  . $f
+done
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-ENABLE_CORRECTION="true"
-COMPLETION_WAITING_DOTS="true"
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+[[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
 
-
-############################
-# Setup antigen and plugins
-############################
-source $HOME/antigen.zsh
-
-antigen use oh-my-zsh
-
-# oh-my-zsh
-
-antigen bundle colored-man-pages
-antigen bundle command-not-found
-antigen bundle common-aliases
-antigen bundle copyfile
-antigen bundle debian
-antigen bundle docker
-antigen bundle docker-compose
-antigen bundle dotenv
-antigen bundle git
-antigen bundle go
-antigen bundle jsontools
-antigen bundle macOS
-antigen bundle node
-antigen bundle npm
-antigen bundle nvm
-antigen bundle pylint
-antigen bundle python
-antigen bundle systemd
-antigen bundle thefuck
-antigen bundle tmux
-antigen bundle vscode
-antigen bundle web-search
-antigen bundle yarn
-
-# others
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-antigen theme romkatv/powerlevel10k
-
-antigen apply
+source $HOME/.cargo/env
 
 ############################
-# aliass
+# Aliases
 ############################
 alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias diskspace="du -S | sort -n -r | less"
@@ -76,38 +39,68 @@ alias glog="git log --all --decorate --oneline --graph"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias zreload="source ~/.zshrc"
 alias zconfig="vim ~/.zshrc"
-alias vim="$HOME/.local/bin/lvim"
-
+alias lvim="$HOME/.local/bin/lvim"
+alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
+alias lc="colorls"
 eval $(thefuck --alias)
 
 ############################
-# Utilities
+# Antigen / Plugins
 ############################
-# Easy way to extract archives
-extract () {
-   if [ -f $1 ] ; then
-       case $1 in
-           *.tar.bz2)   tar xvjf $1;;
-           *.tar.gz)    tar xvzf $1;;
-           *.bz2)       bunzip2 $1 ;;
-           *.rar)       unrar x $1 ;;
-           *.gz)        gunzip $1  ;;
-           *.tar)       tar xvf $1 ;;
-           *.tbz2)      tar xvjf $1;;
-           *.tgz)       tar xvzf $1;;
-           *.zip)       unzip $1   ;;
-           *.Z)         uncompress $1  ;;
-           *.7z)        7z x $1;;
-           *) echo "don't know how to extract '$1'..." ;;
-       esac
-   else
-       echo "'$1' is not a valid file!"
-   fi
-}
+# make sure we have zplug installed
+if [[ ! -d ~/.zplug ]];then
+    printf "Install zplug? [y/N]: "
+    if read -q; then
+        echo; git clone https://github.com/b4b4r07/zplug ~/.zplug
+    fi
+fi
 
-# Move 'up' so many directories instead of using several cd ../../, etc.
-up() { cd $(eval printf '../'%.0s {1..$1}) && pwd; }
+if [[ -f $HOME/.zplug/init.zsh ]];then
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+  source $HOME/.zplug/init.zsh
+
+  # oh-my-zsh
+  zplug "plugins/colored-man-pages", from:oh-my-zsh
+  zplug "plugins/command-not-found", from:oh-my-zsh
+  zplug "plugins/common-aliases", from:oh-my-zsh
+  zplug "plugins/copyfile", from:oh-my-zsh
+  zplug "plugins/debian", from:oh-my-zsh
+  zplug "plugins/docker", from:oh-my-zsh
+  zplug "plugins/docker-compose", from:oh-my-zsh
+  zplug "plugins/dotenv", from:oh-my-zsh
+  zplug "plugins/git", from:oh-my-zsh
+  zplug "plugins/go", from:oh-my-zsh
+  zplug "plugins/jsontools", from:oh-my-zsh
+  zplug "plugins/macOS", from:oh-my-zsh
+  zplug "plugins/node", from:oh-my-zsh
+  zplug "plugins/npm", from:oh-my-zsh
+  zplug "plugins/nvm", from:oh-my-zsh
+  zplug "plugins/pylint", from:oh-my-zsh
+  zplug "plugins/python", from:oh-my-zsh
+  zplug "plugins/systemd", from:oh-my-zsh
+  zplug "plugins/thefuck", from:oh-my-zsh
+  zplug "plugins/tmux", from:oh-my-zsh
+  zplug "plugins/vscode", from:oh-my-zsh
+  zplug "plugins/web-search", from:oh-my-zsh
+  zplug "plugins/yarn", from:oh-my-zsh
+
+  # others
+  zplug "zsh-users/zsh-autosuggestions"
+  zplug "zsh-users/zsh-completions"
+  zplug "zsh-users/zsh-syntax-highlighting"
+
+  # themes / appearance
+  zplug "romkatv/powerlevel10k", as:theme
+
+  if ! zplug check --verbose; then
+      printf "Install Plugins? [y/N]: "
+      if read -q; then
+        echo; zplug install
+      fi
+  fi
+
+  zplug load
+fi
+
+[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
 

@@ -1,4 +1,4 @@
-goto()
+function goto()
 {
   local target
   _goto_resolve_db
