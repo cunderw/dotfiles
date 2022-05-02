@@ -25,7 +25,8 @@ fi
 
 [[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
 
-source $HOME/.cargo/env
+[[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
+source $HOME/.config/zsh_highlight_styles
 
 ############################
 # Aliases
@@ -37,11 +38,11 @@ alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"til
 alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
 alias glog="git log --all --decorate --oneline --graph"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
-alias zreload="source ~/.zshrc"
+alias zreload="exec zsh"
 alias zconfig="vim ~/.zshrc"
 alias lvim="$HOME/.local/bin/lvim"
 alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
-alias lc="colorls"
+alias cls="colorls --dark"
 eval $(thefuck --alias)
 
 ############################
@@ -89,6 +90,7 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
   zplug "zsh-users/zsh-completions"
   zplug "zsh-users/zsh-syntax-highlighting"
 
+  zplug "so-fancy/diff-so-fancy", as:command
   # themes / appearance
   zplug "romkatv/powerlevel10k", as:theme
 

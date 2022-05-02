@@ -11,6 +11,8 @@ brew install ctags
 brew install cmake3
 brew install wget
 brew install fzf
+brew install bat
+brew install navi
 
 # casks
 brew tap homebrew/cask-fonts
@@ -25,5 +27,8 @@ nvm use 16
 
 # python package installs
 pip3 install pynvim
+
+# ruby package installs
+gem install colorls
 
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
