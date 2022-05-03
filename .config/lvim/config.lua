@@ -12,6 +12,8 @@ an executable
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "dracula"
+-- to disable icons and use a minimalist setup, uncomment the following
+-- lvim.use_icons = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -143,8 +145,8 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- Additional Plugins
 lvim.plugins = {
-  {"Mofiqul/dracula.nvim"},
-  {"christoomey/vim-tmux-navigator"},
+  { "Mofiqul/dracula.nvim" },
+  { "christoomey/vim-tmux-navigator" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

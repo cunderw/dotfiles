@@ -15,6 +15,7 @@ brew install fzf
 brew install bat
 brew install navi
 brew install thefuck
+brew install pnpm
 
 # casks
 brew tap homebrew/cask-fonts
@@ -25,7 +26,6 @@ brew install --cask font-fira-mono-nerd-font
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # setup node 16
 nvm install 16
