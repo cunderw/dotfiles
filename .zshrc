@@ -8,6 +8,8 @@ export NVM_DIR="$HOME/.nvm"
 export GOPATH="$HOME/go"
 export PATH=$PATH:$GOPATH/bin
 export DISABLE_AUTO_TITLE=true
+export PNPM_HOME="/Users/cunderw/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -105,4 +107,6 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
 fi
 
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
+
+
 
