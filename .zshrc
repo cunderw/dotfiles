@@ -48,7 +48,7 @@ alias cls="colorls --dark"
 eval $(thefuck --alias)
 
 ############################
-# Antigen / Plugins
+# Plugins
 ############################
 # make sure we have zplug installed
 if [[ ! -d ~/.zplug ]];then
@@ -91,7 +91,7 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
   zplug "zsh-users/zsh-autosuggestions"
   zplug "zsh-users/zsh-completions"
   zplug "zsh-users/zsh-syntax-highlighting"
-
+  zplug "jeffreytse/zsh-vi-mode"
   zplug "so-fancy/diff-so-fancy", as:command
   # themes / appearance
   zplug "romkatv/powerlevel10k", as:theme
@@ -107,6 +107,4 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
 fi
 
 [[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
-
-
 
