@@ -1,15 +1,23 @@
 ############################
 # Environment Setup
 ############################
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-export EDITOR='nvim'
-export NVM_DIR="$HOME/.nvm"
-export GOPATH="$HOME/go"
-export PATH=$PATH:$GOPATH/bin
 export DISABLE_AUTO_TITLE=true
-export PNPM_HOME="/Users/cunderw/Library/pnpm"
+export EDITOR='nvim'
+export GOPATH="$HOME/go"
+export LANG=en_US.UTF-8
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+export NVM_DIR="$HOME/.nvm"
 export PATH="$PNPM_HOME:$PATH"
+export PATH=$PATH:$GOPATH/bin
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PNPM_HOME="/Users/cunderw/Library/pnpm"
+export TERM="xterm-256color"
+export ZPLUG_HOME=$HOME/.zplug
+
+COMPLETION_WAITING_DOTS="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+ENABLE_CORRECTION="true"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -21,46 +29,60 @@ for f in ~/.scripts/sourced/*; do
   . $f
 done
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 [[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
 
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
+
 source $HOME/.config/zsh_highlight_styles
 
 ############################
 # Aliases
 ############################
-alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-alias diskspace="du -S | sort -n -r | less"
-alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
-alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
-alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
-alias glog="git log --all --decorate --oneline --graph"
-alias dotsupdate="dotfiles pull && dotfiles submodule update"
-alias zreload="exec zsh"
-alias zconfig="vim ~/.zshrc"
-alias lvim="$HOME/.local/bin/lvim"
-alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
 alias cls="colorls --dark"
+alias diskspace="du -S | sort -n -r | less"
+alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
+alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias dotsupdate="dotfiles pull && dotfiles submodule update"
+alias glog="git log --all --decorate --oneline --graph"
+alias grep='grep --color=auto'
+alias l='ls --color=auto'
+alias la='ls -lah --color=auto'
+alias lh='ls -lh --color=auto'
+alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias ls='ls --color=auto'
+alias lvim="$HOME/.local/bin/lvim"
+alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
+alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
+alias zconfig="vim ~/.zshrc"
+alias zreload="exec zsh"
+
 eval $(thefuck --alias)
+
+#############################
+# Keybindings 
+############################
+# Keybindings for substring search plugin. Maps up and down arrows.
+bindkey -M main '^[OA' history-substring-search-up
+bindkey -M main '^[OB' history-substring-search-down
+bindkey -M main '^[[A' history-substring-search-up
+bindkey -M main '^[[B' history-substring-search-up
+bindkey "^P" history-beginning-search-backward
+bindkey "^N" history-beginning-search-forward
 
 ############################
 # Plugins
 ############################
 # make sure we have zplug installed
-if [[ ! -d ~/.zplug ]];then
+if [[ ! -d $ZPLUG_HOME ]];  then
     printf "Install zplug? [y/N]: "
     if read -q; then
         echo; git clone https://github.com/b4b4r07/zplug ~/.zplug
     fi
 fi
 
-if [[ -f $HOME/.zplug/init.zsh ]];then
+if [[ -f $ZPLUG_HOME/init.zsh ]]; then
 
-  source $HOME/.zplug/init.zsh
+  source $ZPLUG_HOME/init.zsh
 
   # oh-my-zsh
   zplug "plugins/colored-man-pages", from:oh-my-zsh
@@ -87,18 +109,25 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
   zplug "plugins/web-search", from:oh-my-zsh
   zplug "plugins/yarn", from:oh-my-zsh
 
+  # prezto
+  zplug "modules/completion", from:prezto
+  zplug "modules/directory",  from:prezto
+ 
   # shell tweaks 
   zplug "jeffreytse/zsh-vi-mode"
-  zplug "zsh-users/zsh-autosuggestions"
-  zplug "zsh-users/zsh-completions"
-  zplug "zsh-users/zsh-syntax-highlighting"
   
   # commands
   zplug "so-fancy/diff-so-fancy", as:command
-
+ 
+  # zsh users
+  zplug "zsh-users/zsh-completions",              defer:0
+  zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
+  zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
+  zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
+ 
   # themes / appearance
-  zplug "romkatv/powerlevel10k", as:theme
-  zplug "zsh-users/zsh-syntax-highlighting", defer:2
+  zplug "romkatv/powerlevel10k", as:theme 
+ 
   if ! zplug check --verbose; then
       printf "Install Plugins? [y/N]: "
       if read -q; then
@@ -107,7 +136,8 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
   fi
 
   zplug load
+
 fi
 
-[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
-
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
