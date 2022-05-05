@@ -407,7 +407,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>20.39143118351064</real>
+			<real>48</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -839,7 +839,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.069439827127659573</real>
+			<real>0.19</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -1039,7 +1039,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>20.39143118351064</real>
+			<real>48</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -1499,7 +1499,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.069439827127659573</real>
+			<real>0.18943982712765961</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>

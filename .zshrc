@@ -98,7 +98,7 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
 
   # themes / appearance
   zplug "romkatv/powerlevel10k", as:theme
-
+  zplug "zsh-users/zsh-syntax-highlighting", defer:2
   if ! zplug check --verbose; then
       printf "Install Plugins? [y/N]: "
       if read -q; then
