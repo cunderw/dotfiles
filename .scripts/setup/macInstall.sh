@@ -16,6 +16,7 @@ brew install bat
 brew install navi
 brew install thefuck
 brew install pnpm
+brew install alt-tab
 
 # casks
 brew tap homebrew/cask-fonts

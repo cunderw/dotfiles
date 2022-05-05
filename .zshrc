@@ -87,12 +87,15 @@ if [[ -f $HOME/.zplug/init.zsh ]];then
   zplug "plugins/web-search", from:oh-my-zsh
   zplug "plugins/yarn", from:oh-my-zsh
 
-  # others
+  # shell tweaks 
+  zplug "jeffreytse/zsh-vi-mode"
   zplug "zsh-users/zsh-autosuggestions"
   zplug "zsh-users/zsh-completions"
   zplug "zsh-users/zsh-syntax-highlighting"
-  zplug "jeffreytse/zsh-vi-mode"
+  
+  # commands
   zplug "so-fancy/diff-so-fancy", as:command
+
   # themes / appearance
   zplug "romkatv/powerlevel10k", as:theme
 
