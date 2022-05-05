@@ -58,17 +58,6 @@ alias zreload="exec zsh"
 
 eval $(thefuck --alias)
 
-#############################
-# Keybindings 
-############################
-# Keybindings for substring search plugin. Maps up and down arrows.
-bindkey -M main '^[OA' history-substring-search-up
-bindkey -M main '^[OB' history-substring-search-down
-bindkey -M main '^[[A' history-substring-search-up
-bindkey -M main '^[[B' history-substring-search-up
-bindkey "^P" history-beginning-search-backward
-bindkey "^N" history-beginning-search-forward
-
 ############################
 # Plugins
 ############################
@@ -112,15 +101,12 @@ if [[ -f $ZPLUG_HOME/init.zsh ]]; then
   # prezto
   zplug "modules/completion", from:prezto
   zplug "modules/directory",  from:prezto
- 
-  # shell tweaks 
-  zplug "jeffreytse/zsh-vi-mode"
   
   # commands
   zplug "so-fancy/diff-so-fancy", as:command
  
   # zsh users
-  zplug "zsh-users/zsh-completions",              defer:0
+  # zplug "zsh-users/zsh-completions",              defer:0
   zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
   zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
   zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
@@ -138,6 +124,15 @@ if [[ -f $ZPLUG_HOME/init.zsh ]]; then
   zplug load
 
 fi
+
+#############################
+# Keybindings 
+############################
+# Keybindings for substring search plugin. Maps up and down arrows.
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey "^P" history-substring-search-up
+bindkey "^N" history-substring-search-down
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
