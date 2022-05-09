@@ -1,18 +1,19 @@
 ############################
 # Environment Setup
 ############################
-export DISABLE_AUTO_TITLE=true
-export EDITOR='nvim'
-export GOPATH="$HOME/go"
-export LANG=en_US.UTF-8
-export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-export NVM_DIR="$HOME/.nvm"
-export PATH="$PNPM_HOME:$PATH"
+export GOPATH=$HOME/go
+export NVM_DIR=$HOME/.nvm
+export PATH=$PNPM_HOME:$PATH
 export PATH=$PATH:$GOPATH/bin
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export PNPM_HOME="/Users/cunderw/Library/pnpm"
-export TERM="xterm-256color"
+export PNPM_HOME=/Users/cunderw/Library/pnpm
 export ZPLUG_HOME=$HOME/.zplug
+
+export DISABLE_AUTO_TITLE=true
+export EDITOR='nvim'
+export LANG=en_US.UTF-8
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+export TERM="xterm-256color"
 
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
@@ -44,12 +45,12 @@ alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"til
 alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias glog="git log --all --decorate --oneline --graph"
-alias grep='grep --color=auto'
-alias l='ls --color=auto'
-alias la='ls -lah --color=auto'
-alias lh='ls -lh --color=auto'
+alias grep="grep --color=auto"
+alias l="ls --color=auto"
+alias la="ls -lah --color=auto"
+alias lh="ls -lh --color=auto"
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
-alias ls='ls --color=auto'
+alias ls="ls --color=auto"
 alias lvim="$HOME/.local/bin/lvim"
 alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
 alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
@@ -63,7 +64,7 @@ eval $(thefuck --alias)
 ############################
 # make sure we have zplug installed
 if [[ ! -d $ZPLUG_HOME ]];  then
-    printf "Install zplug? [y/N]: "
+    printf 'Install zplug? [y/N]: '
     if read -q; then
         echo; git clone https://github.com/b4b4r07/zplug ~/.zplug
     fi
@@ -115,7 +116,7 @@ if [[ -f $ZPLUG_HOME/init.zsh ]]; then
   zplug "romkatv/powerlevel10k", as:theme 
  
   if ! zplug check --verbose; then
-      printf "Install Plugins? [y/N]: "
+      printf 'Install Plugins? [y/N]: '
       if read -q; then
         echo; zplug install
       fi
