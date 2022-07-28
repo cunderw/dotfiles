@@ -24,6 +24,11 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
+# Appends every command to the history file once it is executed
+setopt inc_append_history
+# Reloads the history whenever you use it
+setopt share_history
 ############################
 # Sourced Files / Utilities
 ############################
