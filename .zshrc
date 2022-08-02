@@ -21,6 +21,7 @@ ENABLE_CORRECTION="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
 
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
@@ -138,11 +139,20 @@ fi
 # Keybindings for substring search plugin. Maps up and down arrows.
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+# ctrl+p and ctrl+n for previous next
 bindkey "^P" history-substring-search-up
 bindkey "^N" history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+
+# ctrl+space to accept the auto suggestion
 bindkey '^ ' autosuggest-accept
+
+# fix zsh bug where backspace breaks after exiting insert mode
+bindkey "^?" backward-delete-char
+
+# fix home and end keys
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
