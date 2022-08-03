@@ -24,12 +24,20 @@ setopt inc_append_history
 # Reloads the history whenever you use it
 setopt share_history
 
+############################
+# Plugin Settings
+############################
+typeset -gA ZSH_HIGHLIGHT_STYLES
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ENABLE_CORRECTION="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
-
+ZSH_HIGHLIGHT_STYLES[alias]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[builtin]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[function]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[command]=fg=cyan
+ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan
 ############################
 # Sourced Files / Utilities
 ############################
@@ -42,7 +50,7 @@ done
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source $HOME/.config/zsh_highlight_styles
+# source $HOME/.config/zsh_highlight_styles
 
 # fix nvim breaking cursor
 _fix_cursor() {
