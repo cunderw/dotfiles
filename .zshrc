@@ -1,19 +1,28 @@
+# Enable p10k-instant-prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 ############################
 # Environment Setup
 ############################
-export GOPATH=$HOME/go
-export NVM_DIR=$HOME/.nvm
-export PATH=$PNPM_HOME:$PATH
-export PATH=$PATH:$GOPATH/bin
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export PNPM_HOME=/Users/cunderw/Library/pnpm
-export ZPLUG_HOME=$HOME/.zplug
-
 export DISABLE_AUTO_TITLE=true
 export EDITOR='nvim'
+export GOPATH=$HOME/go
 export LANG=en_US.UTF-8
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+export NVM_DIR=$HOME/.nvm
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PNPM_HOME:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PNPM_HOME=/Users/cunderw/Library/pnpm
 export TERM="xterm-256color"
+export ZPLUG_HOME=$HOME/.zplug
+
+# Appends every command to the history file once it is executed
+setopt inc_append_history
+# Reloads the history whenever you use it
+setopt share_history
 
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
@@ -21,15 +30,6 @@ ENABLE_CORRECTION="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
 
-
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-# Appends every command to the history file once it is executed
-setopt inc_append_history
-# Reloads the history whenever you use it
-setopt share_history
 ############################
 # Sourced Files / Utilities
 ############################
@@ -38,11 +38,18 @@ for f in ~/.scripts/sourced/*; do
 done
 
 [[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
-
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 source $HOME/.config/zsh_highlight_styles
 
+# fix nvim breaking cursor
+_fix_cursor() {
+   echo -ne '\e[5 q'
+}
+
+precmd_functions+=(_fix_cursor)
 ############################
 # Aliases
 ############################
@@ -114,7 +121,6 @@ if [[ -f $ZPLUG_HOME/init.zsh ]]; then
   zplug "so-fancy/diff-so-fancy", as:command
  
   # zsh users
-  # zplug "zsh-users/zsh-completions",              defer:0
   zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
   zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
   zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
@@ -153,6 +159,7 @@ bindkey "^?" backward-delete-char
 # fix home and end keys
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
