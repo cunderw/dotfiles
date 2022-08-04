@@ -24,6 +24,9 @@ setopt inc_append_history
 # Reloads the history whenever you use it
 setopt share_history
 
+############################
+# Plugin Settings
+############################
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ENABLE_CORRECTION="true"
@@ -41,8 +44,6 @@ done
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-source $HOME/.config/zsh_highlight_styles
 
 # fix nvim breaking cursor
 _fix_cursor() {
@@ -159,7 +160,6 @@ bindkey "^?" backward-delete-char
 # fix home and end keys
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
-
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
