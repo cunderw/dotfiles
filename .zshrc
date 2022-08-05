@@ -27,7 +27,6 @@ setopt share_history
 ############################
 # Plugin Settings
 ############################
-typeset -gA ZSH_HIGHLIGHT_STYLES
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ENABLE_CORRECTION="true"
@@ -38,6 +37,7 @@ ZSH_HIGHLIGHT_STYLES[builtin]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[function]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[command]=fg=cyan
 ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan
+
 ############################
 # Sourced Files / Utilities
 ############################
@@ -50,14 +50,13 @@ done
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# source $HOME/.config/zsh_highlight_styles
-
 # fix nvim breaking cursor
 _fix_cursor() {
    echo -ne '\e[5 q'
 }
 
 precmd_functions+=(_fix_cursor)
+
 ############################
 # Aliases
 ############################
@@ -167,7 +166,6 @@ bindkey "^?" backward-delete-char
 # fix home and end keys
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
-
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
