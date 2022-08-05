@@ -32,11 +32,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ENABLE_CORRECTION="true"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=247'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
-ZSH_HIGHLIGHT_STYLES[alias]=fg=cyan
-ZSH_HIGHLIGHT_STYLES[builtin]=fg=cyan
-ZSH_HIGHLIGHT_STYLES[function]=fg=cyan
-ZSH_HIGHLIGHT_STYLES[command]=fg=cyan
-ZSH_HIGHLIGHT_STYLES[precommand]=fg=cyan
 
 ############################
 # Sourced Files / Utilities
