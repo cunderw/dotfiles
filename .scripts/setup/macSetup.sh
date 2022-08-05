@@ -83,7 +83,7 @@ echo "# Disable the warning when changing a file extension"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 ###############################################################################
-# Safari & WebKit                                                             #
+# Safari & WebKit                                                             
 ###############################################################################
 
 echo "Set Safari’s home page to `about:blank` for faster loading"
@@ -107,6 +107,13 @@ defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 echo "Enable the WebKit Developer Tools in the Mac App Store"
 defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 
+####################
+# VS Code
+####################
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false              # For VS Code
+defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false      # For VS Code Insider
+defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false         # For VS Codium
+defaults write com.microsoft.VSCodeExploration ApplePressAndHoldEnabled -bool false   # For VS Codium Exploration users
 
 echo "Restarting finder and dock to apply changes"
 killall Finder
