@@ -24,9 +24,9 @@ lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.section_separators = { left = '', right = '' }
 lvim.builtin.lualine.options.component_separators = '|'
 lvim.builtin.lualine.sections.lualine_a = {
+  { 'mode', separator = { left = '' }, right_padding = 2 },
 }
 lvim.builtin.lualine.sections.lualine_b = {
-  { 'mode', separator = { left = '' }, right_padding = 2 },
   { 'filename', separator = { right = '' }, right_padding = 2 },
 }
 lvim.builtin.lualine.sections.lualine_c = {
@@ -37,9 +37,10 @@ lvim.builtin.lualine.sections.lualine_x = {
 }
 lvim.builtin.lualine.sections.lualine_y = {
   { 'location', right_padding = 2 },
+}
+lvim.builtin.lualine.sections.lualine_z = {
   { 'filetype', separator = { right = '' }, right_padding = 2 },
 }
-lvim.builtin.lualine.sections.lualine_z = {}
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
