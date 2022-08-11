@@ -7,7 +7,7 @@ lvim.builtin.alpha.dashboard.section.header.val = {
 }
 
 require("plugins")
-
+require("keymaps")
 -- General LunarVim Configs
 lvim.log.level = "warn"
 lvim.format_on_save = true
@@ -20,13 +20,9 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.dap.active = true
+--lvim.builtin.dap.active = true
 
 
 -- Misc Configs
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
-
--- Keymappings [view all the defaults by pressing <leader>Lk]
-lvim.leader = "space"
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
