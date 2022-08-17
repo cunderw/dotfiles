@@ -1,29 +1,15 @@
 ## Setting Up a New Machine
 
-### Prerequisites
-
-- [Neovim](neovim-install) >= v0.6.0
-
-```shell
-  brew install neovim --nightly
-```
-
-- [NodeJS](nodejs-install) >= v16.13.0
-  most language servers need this
-
-```shell
-brew install node
-```
-
 ### Installing Dotfiles
-``` bash
+```shell
 git clone --separate-git-dir=$HOME/.dotfiles git@github.com:cunderw/dotfiles.git tmpdotfiles
 rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
 rm -r tmpdotfiles
 ```
 
 ### Install Scripts
-```
+WIP
+```shell
 ~/.scripts/macInstall.sh
 ~/.scripts/macSetup.sh
 ```
@@ -45,11 +31,31 @@ brew install --cask font-iosevka-nerd-font-mono
 brew install --cask font-hack-nerd-font
 ```
 
+## Lunarvim Setup
+
+### Prerequisites
+
+- [Neovim](neovim-install) >= v0.6.0
+
+```shell
+  brew install neovim
+```
+
+- [NodeJS](nodejs-install) >= v16.13.0
+  most language servers need this
+
+```shell
+brew install node
+```
+
+### GO Development Setup
+TODO
+
 ### Java Development Setup
 
 Please run the following to have a better debugging and testing support for java
 
-```
+```shell
 mkdir -p ~/workspace
 git clone git@github.com:microsoft/java-debug.git ~/.config/lvim/.java-debug
 cd ~/.config/lvim/.java-debug/
