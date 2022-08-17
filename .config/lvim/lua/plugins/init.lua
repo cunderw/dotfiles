@@ -1,6 +1,6 @@
 require("plugins.lualine").config()
 require("plugins.treesitter").config()
-
+require("plugins.bufferline").config()
 -- ==================
 -- Additional plugins
 -- ==================
@@ -25,6 +25,20 @@ lvim.plugins = {
   -- Utils
   { "christoomey/vim-tmux-navigator" },
   { "vimpostor/vim-tpipeline" },
+  -- Navigation
+  {
+    'phaazon/hop.nvim',
+    branch = 'v2',
+    config = function()
+      require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    end
+  },
+  {
+    'simrat39/symbols-outline.nvim',
+    config = function()
+      require("plugins.outline").config()
+    end,
+  },
   -- Misc Dev
   { "lukas-reineke/indent-blankline.nvim" },
   { "norcalli/nvim-colorizer.lua",
@@ -32,8 +46,12 @@ lvim.plugins = {
       require("plugins.colorizer").config()
     end,
   },
+  { "majutsushi/tagbar",
+    cmd = { "TagbarToggle" },
+  },
   { "p00f/nvim-ts-rainbow" },
   { "preservim/vimux" },
+  { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' },
   -- Golang
   { "benmills/vimux-golang" },
   { "fatih/vim-go" },

@@ -26,3 +26,8 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 -- Misc Configs
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
+vim.opt.showtabline = 2
+vim.opt.title = true -- set the title of window to the value of the titlestring
+vim.opt.titlestring = "%<%F%=%l/%L - nvim"
+vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+vim.cmd "set laststatus=0"
