@@ -1,6 +1,7 @@
 require("plugins.lualine").config()
 require("plugins.treesitter").config()
 require("plugins.bufferline").config()
+require("plugins.nvimtree")
 -- ==================
 -- Additional plugins
 -- ==================
@@ -25,6 +26,17 @@ lvim.plugins = {
   -- Utils
   { "christoomey/vim-tmux-navigator" },
   { "vimpostor/vim-tpipeline" },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
+    config = function()
+      require("persistence").setup {
+        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+        options = { "buffers", "curdir", "tabpages", "winsize" },
+      }
+    end,
+  },
   -- Navigation
   {
     'phaazon/hop.nvim',
