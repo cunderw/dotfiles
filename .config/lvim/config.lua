@@ -20,10 +20,11 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
---lvim.builtin.dap.active = true
+lvim.builtin.dap.active = true
 
-
+lvim.lsp.templates_dir = join_paths(get_runtime_dir(), "after", "ftplugin")
 -- Misc Configs
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "java", "jdtls" })
 vim.opt.list = true
 vim.opt.listchars:append "space:⋅"
 vim.opt.showtabline = 2

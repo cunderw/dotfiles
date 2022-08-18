@@ -1,7 +1,6 @@
 local Bufferline = {}
 
 Bufferline.config = function()
-  local groups = require('bufferline.groups')
   lvim.builtin.bufferline.options.enforce_regular_tabs = true
   lvim.builtin.bufferline.options.always_show_bufferline = true
   lvim.builtin.bufferline.options.groups = {
@@ -26,7 +25,6 @@ Bufferline.config = function()
           return buf.name:match('%_test') or buf.name:match('%_spec')
         end,
       },
-      --groups.builtin.ungrouped,
     },
   }
 end

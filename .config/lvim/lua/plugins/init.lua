@@ -1,5 +1,5 @@
 require("plugins.lualine").config()
-require("plugins.treesitter").config()
+-- require("plugins.treesitter").config()
 require("plugins.bufferline").config()
 require("plugins.nvimtree")
 -- ==================
@@ -69,6 +69,8 @@ lvim.plugins = {
   { "fatih/vim-go" },
   { "rfratto/vim-go-testify" },
   { "sebdah/vim-delve" },
+  -- Java
+  { "mfussenegger/nvim-jdtls", ft = "java" },
 }
 
 -- ==================
