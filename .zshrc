@@ -9,6 +9,7 @@ fi
 export DISABLE_AUTO_TITLE=true
 export EDITOR='nvim'
 export GOPATH=$HOME/go
+export JAVA_HOME=$(/usr/libexec/java_home)
 export LANG=en_US.UTF-8
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export NVM_DIR=$HOME/.nvm
