@@ -1,9 +1,6 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
     url = https://github.com/tmux-plugins/tpm
-[submodule ".zsh/zsh-dircolors-nord"]                                                                                    
-    path  = .zsh/zsh-dircorlors-nord
-    tab  = https://github.com/coltondick/zsh-dircolors-nord.git
-[submodule "/Users/cunderw/.config/nvim"]
-	path = /Users/cunderw/.config/nvim
-	url = git@github.com:cunderw/nvim.git
+[submodule ".config/nvim"]
+	path = .config/nvim
+  url = https://github.com/cunderw/nvim.git
