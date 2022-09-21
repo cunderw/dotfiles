@@ -1,6 +1,6 @@
 # Enable p10k-instant-prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 ############################
@@ -9,17 +9,17 @@ fi
 export DISABLE_AUTO_TITLE=true
 export EDITOR='nvim'
 export GOPATH=$HOME/go
-export JAVA_HOME=$(/usr/libexec/java_home)
 export LANG=en_US.UTF-8
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export NVM_DIR=$HOME/.nvm
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PNPM_HOME:$PATH
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
 export PNPM_HOME=/Users/cunderw/Library/pnpm
 export TERM="xterm-256color"
 export ZPLUG_HOME=$HOME/.zplug
-
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/HOME
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.4
 # Appends every command to the history file once it is executed
 setopt inc_append_history
 # Reloads the history whenever you use it
@@ -38,7 +38,7 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
 # Sourced Files / Utilities
 ############################
 for f in ~/.scripts/sourced/*; do
-  . $f
+    . $f
 done
 
 [[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
@@ -48,7 +48,7 @@ done
 
 # fix nvim breaking cursor
 _fix_cursor() {
-   echo -ne '\e[5 q'
+    echo -ne '\e[5 q'
 }
 
 precmd_functions+=(_fix_cursor)
@@ -89,61 +89,61 @@ fi
 
 if [[ -f $ZPLUG_HOME/init.zsh ]]; then
 
-  source $ZPLUG_HOME/init.zsh
+    source $ZPLUG_HOME/init.zsh
 
-  # oh-my-zsh
-  zplug "plugins/colored-man-pages", from:oh-my-zsh
-  zplug "plugins/command-not-found", from:oh-my-zsh
-  zplug "plugins/common-aliases", from:oh-my-zsh
-  zplug "plugins/copyfile", from:oh-my-zsh
-  zplug "plugins/debian", from:oh-my-zsh
-  zplug "plugins/docker", from:oh-my-zsh
-  zplug "plugins/docker-compose", from:oh-my-zsh
-  zplug "plugins/dotenv", from:oh-my-zsh
-  zplug "plugins/git", from:oh-my-zsh
-  zplug "plugins/go", from:oh-my-zsh
-  zplug "plugins/jsontools", from:oh-my-zsh
-  zplug "plugins/macOS", from:oh-my-zsh
-  zplug "plugins/node", from:oh-my-zsh
-  zplug "plugins/npm", from:oh-my-zsh
-  zplug "plugins/nvm", from:oh-my-zsh
-  zplug "plugins/pylint", from:oh-my-zsh
-  zplug "plugins/python", from:oh-my-zsh
-  zplug "plugins/systemd", from:oh-my-zsh
-  zplug "plugins/thefuck", from:oh-my-zsh
-  zplug "plugins/tmux", from:oh-my-zsh
-  zplug "plugins/vscode", from:oh-my-zsh
-  zplug "plugins/web-search", from:oh-my-zsh
-  zplug "plugins/yarn", from:oh-my-zsh
+    # oh-my-zsh
+    zplug "plugins/colored-man-pages", from:oh-my-zsh
+    zplug "plugins/command-not-found", from:oh-my-zsh
+    zplug "plugins/common-aliases", from:oh-my-zsh
+    zplug "plugins/copyfile", from:oh-my-zsh
+    zplug "plugins/debian", from:oh-my-zsh
+    zplug "plugins/docker", from:oh-my-zsh
+    zplug "plugins/docker-compose", from:oh-my-zsh
+    zplug "plugins/dotenv", from:oh-my-zsh
+    zplug "plugins/git", from:oh-my-zsh
+    zplug "plugins/go", from:oh-my-zsh
+    zplug "plugins/jsontools", from:oh-my-zsh
+    zplug "plugins/macOS", from:oh-my-zsh
+    zplug "plugins/node", from:oh-my-zsh
+    zplug "plugins/npm", from:oh-my-zsh
+    zplug "plugins/nvm", from:oh-my-zsh
+    zplug "plugins/pylint", from:oh-my-zsh
+    zplug "plugins/python", from:oh-my-zsh
+    zplug "plugins/systemd", from:oh-my-zsh
+    zplug "plugins/thefuck", from:oh-my-zsh
+    zplug "plugins/tmux", from:oh-my-zsh
+    zplug "plugins/vscode", from:oh-my-zsh
+    zplug "plugins/web-search", from:oh-my-zsh
+    zplug "plugins/yarn", from:oh-my-zsh
 
-  # prezto
-  zplug "modules/completion", from:prezto
-  zplug "modules/directory",  from:prezto
-  
-  # commands
-  zplug "so-fancy/diff-so-fancy", as:command
- 
-  # zsh users
-  zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
-  zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
-  zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
- 
-  # themes / appearance
-  zplug "romkatv/powerlevel10k", as:theme 
- 
-  if ! zplug check --verbose; then
-      printf 'Install Plugins? [y/N]: '
-      if read -q; then
-        echo; zplug install
-      fi
-  fi
+    # prezto
+    zplug "modules/completion", from:prezto
+    zplug "modules/directory",  from:prezto
 
-  zplug load
+    # commands
+    zplug "so-fancy/diff-so-fancy", as:command
+
+    # zsh users
+    zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
+    zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
+    zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
+
+    # themes / appearance
+    zplug "romkatv/powerlevel10k", as:theme
+
+    if ! zplug check --verbose; then
+        printf 'Install Plugins? [y/N]: '
+        if read -q; then
+            echo; zplug install
+        fi
+    fi
+
+    zplug load
 
 fi
 
 #############################
-# Keybindings 
+# Keybindings
 ############################
 # Keybindings for substring search plugin. Maps up and down arrows.
 bindkey '^[[A' history-substring-search-up
