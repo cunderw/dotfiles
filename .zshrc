@@ -18,8 +18,10 @@ export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
 export PNPM_HOME=/Users/cunderw/Library/pnpm
 export TERM="xterm-256color"
 export ZPLUG_HOME=$HOME/.zplug
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/HOME
-export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.4
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk/18.0.2
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 # Appends every command to the history file once it is executed
 setopt inc_append_history
 # Reloads the history whenever you use it
@@ -45,6 +47,8 @@ done
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(rbenv init - zsh)"
 
 # fix nvim breaking cursor
 _fix_cursor() {
