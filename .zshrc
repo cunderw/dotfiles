@@ -8,20 +8,27 @@ fi
 ############################
 export DISABLE_AUTO_TITLE=true
 export EDITOR='nvim'
-export GOPATH=$HOME/go
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk/18.0.2
 export LANG=en_US.UTF-8
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export NVM_DIR=$HOME/.nvm
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PNPM_HOME:$PATH
-export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
 export PNPM_HOME=/Users/cunderw/Library/pnpm
 export TERM="xterm-256color"
 export ZPLUG_HOME=$HOME/.zplug
-export JAVA_HOME=/opt/homebrew/Cellar/openjdk/18.0.2
+
+# GO
+export GOPATH=$HOME/go
+
+# Android
 export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+
+# PATH
 export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
 export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PNPM_HOME:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
+
 # Appends every command to the history file once it is executed
 setopt inc_append_history
 # Reloads the history whenever you use it
@@ -72,13 +79,11 @@ alias la="ls -lah --color=auto"
 alias lh="ls -lh --color=auto"
 alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
 alias ls="ls --color=auto"
-alias lv="$HOME/.local/bin/lvim"
 alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
 alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
 alias zconfig="vim ~/.zshrc"
 alias zreload="exec zsh"
-
-eval $(thefuck --alias)
+alias npmt="npm run test"
 
 ############################
 # Plugins
@@ -118,7 +123,7 @@ if [[ -f $ZPLUG_HOME/init.zsh ]]; then
     zplug "plugins/tmux", from:oh-my-zsh
     zplug "plugins/vscode", from:oh-my-zsh
     zplug "plugins/web-search", from:oh-my-zsh
-    zplug "plugins/yarn", from:oh-my-zsh
+    # zplug "plugins/yarn", from:oh-my-zsh
 
     # prezto
     zplug "modules/completion", from:prezto
