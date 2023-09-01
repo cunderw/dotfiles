@@ -8,7 +8,7 @@ fi
 ############################
 export DISABLE_AUTO_TITLE=true
 export EDITOR='nvim'
-export JAVA_HOME=/opt/homebrew/Cellar/openjdk/18.0.2
+export JAVA_HOME=~/.java/jdk-18.0.2.1+1/Contents/Home
 export LANG=en_US.UTF-8
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export NVM_DIR=$HOME/.nvm
@@ -73,6 +73,7 @@ alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{"til
 alias dots="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dotsupdate="dotfiles pull && dotfiles submodule update"
 alias glog="git log --all --decorate --oneline --graph"
+alias gprune="git fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
 alias grep="grep --color=auto"
 alias l="ls --color=auto"
 alias la="ls -lah --color=auto"

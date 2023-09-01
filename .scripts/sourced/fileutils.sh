@@ -22,3 +22,4 @@ function extract () {
 function scrape() {
   wget -r -nH --cut-dirs=2 --no-parent --reject="index.html*" $1
 }
+
