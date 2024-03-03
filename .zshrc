@@ -12,9 +12,10 @@ export JAVA_HOME=~/.java/jdk-18.0.2.1+1/Contents/Home
 export LANG=en_US.UTF-8
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export NVM_DIR=$HOME/.nvm
-export PNPM_HOME=/Users/cunderw/Library/pnpm
+export PNPM_HOME=$HOME/Library/pnpm
 export TERM="xterm-256color"
 export ZPLUG_HOME=$HOME/.zplug
+export NPM_TOKEN=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
 
 # GO
 export GOPATH=$HOME/go
@@ -28,6 +29,7 @@ export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PNPM_HOME:$PATH
 export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
+export PATH=$PATH:$HOME/flutter/bin
 
 # Appends every command to the history file once it is executed
 setopt inc_append_history
