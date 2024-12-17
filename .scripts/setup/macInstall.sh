@@ -16,6 +16,9 @@ brew install navi
 brew install thefuck
 brew install pnpm
 brew install alt-tab
+brew install fzf
+brew install ripgrep
+brew install lazygit
 
 # casks
 brew tap homebrew/cask-fonts
@@ -23,4 +26,3 @@ brew install --cask font-fira-mono-nerd-font
 
 # apps
 brew install --cask discord
-
