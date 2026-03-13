@@ -140,30 +140,29 @@ if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
       zplug "so-fancy/diff-so-fancy", as:command
   
       # zsh users
-      zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
-      zplug "zsh-users/zsh-syntax-highlighting",      defer:3, on:"zsh-users/zsh-autosuggestions"
-      zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zsh-users/zsh-syntax-highlighting"
-  
-      # utils
-      zplug "jeffreytse/zsh-vi-mode"
+      #zplug "jeffreytse/zsh-vi-mode"
+      zplug "zsh-users/zsh-autosuggestions"
+      zplug "zsh-users/zsh-history-substring-search"
+      zplug "romkatv/powerlevel10k", as:theme
+      zplug "zsh-users/zsh-syntax-highlighting"  
   
       # themes / appearance
-      zplug "romkatv/powerlevel10k", as:theme
   
-      if ! zplug check --verbose; then
-          printf 'Install Plugins? [y/N]: '
-          if read -q; then
-              echo; zplug install
-          fi
-      fi
+      #if ! zplug check --verbose; then
+      #    printf 'Install Plugins? [y/N]: '
+      #    if read -q; then
+      #        echo; zplug install
+      #    fi
+      #fi
   
       zplug load
   
-  fi
+  #fi
   
   #############################
   # Keybindings
   ############################
+  bindkey -v
   # Keybindings for substring search plugin. Maps up and down arrows.
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down

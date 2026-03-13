@@ -1,18 +1,24 @@
 {
   "extras": [
+    "lazyvim.plugins.extras.ai.claudecode",
+    "lazyvim.plugins.extras.ai.copilot-chat",
+    "lazyvim.plugins.extras.ai.copilot-native",
     "lazyvim.plugins.extras.dap.core",
-    "lazyvim.plugins.extras.coding.copilot",
     "lazyvim.plugins.extras.dap.nlua",
     "lazyvim.plugins.extras.formatting.prettier",
+    "lazyvim.plugins.extras.lang.dart",
+    "lazyvim.plugins.extras.lang.go",
     "lazyvim.plugins.extras.lang.json",
+    "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.tailwind",
     "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.yaml",
     "lazyvim.plugins.extras.linting.eslint",
+    "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.vscode"
   ],
   "news": {
-    "NEWS.md": "6077"
+    "NEWS.md": "11866"
   },
-  "version": 6
+  "version": 8
 }
