@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree -L 3 /Users/underwoc/.config/nvim 2>/dev/null || find /Users/underwoc/.config/nvim -type f -name \"*.lua\" | head -20)",
+      "Skill(keybindings-help)",
+      "Bash(python3 -m json.tool)",
+      "Bash(cat:*)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(''''Global mcpServers:'''', list\\(d.get\\(''''mcpServers'''', {}\\).keys\\(\\)\\)\\)\")",
+      "Bash(find:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "mcp__wwt-nav__find_apps",
+      "mcp__wwt-nav__list_apps",
+      "mcp__wwt-nav__get_app_routes",
+      "mcp__wwt-nav__read_wwt_file",
+      "mcp__wwt-nav__find_files",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); files=[item[''''text''''] for item in data if item[''''type'''']==''''text'''']; print\\(''''\\\\n''''.join\\(files[:1]\\)\\)\")",
+      "Bash(python3 -c \":*)",
+      "Bash(grep -r \"exception\\\\|breakpoint\\\\|dap\\\\.\" /Users/underwoc/.config/nvim/lua --include=*.lua)",
+      "Read(//Users/underwoc/**)",
+      "Read(//Users/underwoc/.config/tmux/**)"
+    ]
+  }
+}
