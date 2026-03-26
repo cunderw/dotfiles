@@ -1,0 +1,3 @@
+theme = TokyoNight Storm
+font-family = FiraMono Nerd Font Mono
+keybind = global:cmd+grave_accent=toggle_quick_terminal
