@@ -14,7 +14,7 @@ export NVM_DIR=$HOME/.nvm
 export PNPM_HOME=$HOME/Library/pnpm
 export TERM="xterm-256color"
 export ZPLUG_HOME=$HOME/.zplug
-export ANTHROPIC_MODEL="sonnet[1m]"
+export ANTHROPIC_MODEL="opus[1m]"
 
 
 # GO
@@ -31,6 +31,7 @@ export PATH=$PNPM_HOME:$PATH
 export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
 export PATH=$PATH:$HOME/flutter/bin
 export PATH="$PATH:/Users/underwoc/.local/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # Appends every command to the history file once it is executed
 setopt inc_append_history
@@ -90,7 +91,10 @@ alias zreload="exec zsh"
 alias npmt="npm run test"
 alias ftest='flutter test | grep -F "[E]"'
 alias icerts="xcrun simctl keychain booted add-root-cert '/Library/Application Support/Netskope/STAgent/data/nscacert.pem'"
-
+alias cc=claude
+alias ccc='claude --continue'
+alias ccd='claude --dangerously-skip-permissions'
+alias ccr='claude --resume'
 ############################
 # Plugins
 ############################

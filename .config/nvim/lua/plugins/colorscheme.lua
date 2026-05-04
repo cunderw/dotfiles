@@ -4,13 +4,10 @@ return {
     lazy = true,
     opts = {
       style = "night",
-    },
-  },
-
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "tokyonight",
+      transparent = true,
+      on_highlights = function(hl, c)
+        hl.Folded = { bg = "NONE", fg = c.comment }
+      end,
     },
   },
 }

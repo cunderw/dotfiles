@@ -1,3 +1,22 @@
-theme = TokyoNight Storm
+theme = TokyoNight
 font-family = FiraMono Nerd Font Mono
+
+# keybindings
+keybind = performable:super+v=paste_from_clipboard
 keybind = global:cmd+grave_accent=toggle_quick_terminal
+macos-option-as-alt = true
+
+# aesthetics
+background=#000000
+macos-titlebar-style = hidden
+cursor-style = block
+cursor-style-blink = true
+cursor-opacity = 0.8
+window-padding-x = 15
+window-padding-y = 10
+
+# typography
+font-size=16
+font-thicken=true
+font-thicken-strength=1
+adjust-cell-height=2
