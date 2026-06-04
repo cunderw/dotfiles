@@ -19,10 +19,10 @@ local function setup_flutter_keymaps()
   end
   flutter_keymaps_loaded = true
 
-  vim.keymap.set("n", "<leader>cF", "", { desc = "+Flutter" })
+  vim.keymap.set("n", "<leader>F", "", { desc = "+Flutter" })
 
   local map = function(key, cmd, desc)
-    vim.keymap.set("n", "<leader>cF" .. key, "<cmd>" .. cmd .. "<cr>", { desc = desc })
+    vim.keymap.set("n", "<leader>F" .. key, "<cmd>" .. cmd .. "<cr>", { desc = desc })
   end
 
   -- App lifecycle
@@ -41,8 +41,6 @@ local function setup_flutter_keymaps()
   -- UI tools
   map("o", "FlutterOutlineOpen", "Outline Open")
   map("O", "FlutterOutlineToggle", "Outline Toggle")
-  map("t", "FlutterLogToggle", "Log Toggle")
-  map("T", "FlutterLogClear", "Log Clear")
   map("i", "FlutterInspectWidget", "Inspect Widget")
   map("V", "FlutterVisualDebug", "Visual Debug")
   map("b", "FlutterToggleBrightness", "Toggle Brightness")
@@ -68,8 +66,16 @@ local function setup_flutter_keymaps()
   map("k", "FlutterFvmList", "FVM List")
   map("K", "FlutterFvmUse", "FVM Use")
 
+  -- Bloc / Cubit (flutter-bloc.nvim; require() auto-loads the plugin via lazy)
+  vim.keymap.set("n", "<leader>FB", function()
+    require("flutter-bloc").create_bloc()
+  end, { desc = "Create Bloc" })
+  vim.keymap.set("n", "<leader>FC", function()
+    require("flutter-bloc").create_cubit()
+  end, { desc = "Create Cubit" })
+
   -- Toggle between source and test file
-  vim.keymap.set("n", "<leader>cFc", function()
+  vim.keymap.set("n", "<leader>Fc", function()
     local path = vim.fn.expand("%:p")
     local root = vim.fn.getcwd()
 
