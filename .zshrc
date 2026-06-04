@@ -30,7 +30,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PNPM_HOME:$PATH
 export PATH=/opt/local/bin:/opt/local/sbin:$HOME/.cargo/bin:$PATH
 export PATH=$PATH:$HOME/flutter/bin
-export PATH="$PATH:/Users/underwoc/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # Appends every command to the history file once it is executed
