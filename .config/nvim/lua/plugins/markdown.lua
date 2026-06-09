@@ -5,8 +5,8 @@ return {
       ["markdownlint-cli2"] = {
         args = {
           "--config",
-          vim.fn.stdpath("config") .. "/markdownlint.jsonc",
-          "--",
+          vim.fn.stdpath("config") .. "/.markdownlint.jsonc",
+          "-",
         },
       },
     },
