@@ -14,7 +14,6 @@ export NVM_DIR=$HOME/.nvm
 export PNPM_HOME=$HOME/Library/pnpm
 export TERM="xterm-256color"
 export ZPLUG_HOME=$HOME/.zplug
-export ANTHROPIC_MODEL="opus[1m]"
 
 
 # GO
