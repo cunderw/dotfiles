@@ -18,7 +18,6 @@
     "lazyvim.plugins.extras.lang.yaml",
     "lazyvim.plugins.extras.linting.eslint",
     "lazyvim.plugins.extras.test.core",
-    "lazyvim.plugins.extras.ui.edgy",
     "lazyvim.plugins.extras.util.octo",
     "lazyvim.plugins.extras.util.rest",
     "lazyvim.plugins.extras.vscode"
