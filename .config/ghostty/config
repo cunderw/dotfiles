@@ -8,6 +8,8 @@ macos-option-as-alt = true
 
 # aesthetics
 background=#000000
+background-opacity=0.8
+background-blur=30
 macos-titlebar-style = hidden
 cursor-style = block
 cursor-style-blink = true
