@@ -1,0 +1,163 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Mirrors the general shape of the previous powerlevel10k setup:
+#   line 1 (left):  os icon, ssh/user@host (remote only), directory, git branch, git status
+#   line 2 (left):  prompt character (vi-mode aware)
+#   line 2 (right):  exit status, duration, jobs, active toolchain versions, cloud context, time
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$cmd_duration\
+$status\
+$jobs\
+$nodejs\
+$golang\
+$rust\
+$ruby\
+$kubernetes\
+$terraform\
+$aws\
+$gcloud\
+$azure\
+$direnv\
+$time\
+$line_break\
+$character"""
+
+add_newline = false
+
+[fill]
+symbol = ' '
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
+vicmd_symbol = '[❮](bold yellow)'
+
+[os]
+disabled = false
+style = 'bold blue'
+
+[os.symbols]
+Macos = '󰀵'
+Linux = ''
+
+# Only shown for root or when connected over SSH, mirroring p10k's CONTEXT segment.
+[username]
+style_user = 'bold #d7af87'
+style_root = 'bold yellow'
+format = '[$user]($style)'
+show_always = false
+
+[hostname]
+ssh_only = true
+format = '[@$hostname]($style) '
+style = 'bold #d7af87'
+
+[directory]
+style = 'bold blue'
+truncation_length = 8
+truncate_to_repo = true
+read_only = ' 󰌾'
+
+[git_branch]
+symbol = ' '
+style = 'bold green'
+format = 'on [$symbol$branch]($style) '
+
+[git_status]
+style = 'yellow'
+format = '([$all_status$ahead_behind]($style)) '
+conflicted = '='
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+untracked = ''
+stashed = '*'
+modified = '!'
+staged = '+'
+renamed = '»'
+deleted = '✘'
+
+[status]
+disabled = false
+style = 'bold red'
+symbol = '✘ '
+format = '[$symbol$status]($style) '
+
+[cmd_duration]
+min_time = 500
+style = 'yellow'
+format = '[$duration]($style) '
+
+[jobs]
+symbol = '✦'
+style = 'bold blue'
+number_threshold = 1
+format = '[$symbol]($style) '
+
+[nodejs]
+symbol = ' '
+style = 'bold green'
+format = '[$symbol$version]($style) '
+
+[golang]
+symbol = ' '
+style = 'bold cyan'
+format = '[$symbol$version]($style) '
+
+[rust]
+symbol = ' '
+style = 'bold red'
+format = '[$symbol$version]($style) '
+
+[ruby]
+symbol = ' '
+style = 'bold red'
+format = '[$symbol$version]($style) '
+
+[kubernetes]
+disabled = false
+symbol = '☸ '
+style = 'bold cyan'
+format = '[$symbol$context]($style) '
+
+[terraform]
+symbol = '💠 '
+style = 'bold magenta'
+format = '[$symbol$workspace]($style) '
+
+[aws]
+symbol = '  '
+style = 'bold #ff9900'
+format = '[$symbol$profile]($style) '
+
+[gcloud]
+symbol = '󱇶 '
+style = 'bold blue'
+format = '[$symbol$account]($style) '
+
+[azure]
+symbol = '󰠅 '
+style = 'bold blue'
+format = '[$symbol$subscription]($style) '
+
+[direnv]
+disabled = false
+symbol = ''
+style = 'bold yellow'
+format = '[$symbol$loaded/$allowed]($style) '
+
+[time]
+disabled = false
+style = 'yellow'
+format = 'at [$time]($style) '
+time_format = '%H:%M:%S'
+
+[package]
+disabled = true

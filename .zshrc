@@ -1,7 +1,8 @@
 # Enable p10k-instant-prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# (disabled while testing starship as the prompt; uncomment to go back to p10k)
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 ############################
 # Environment Setup
@@ -13,7 +14,10 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export NVM_DIR=$HOME/.nvm
 export PNPM_HOME=$HOME/Library/pnpm
 export TERM="xterm-256color"
-export ZPLUG_HOME=$HOME/.zplug
+# Some oh-my-zsh plugins (git, npm, tmux, macos, flutter) expect this to be
+# set by the full framework, which we don't load - provide it ourselves.
+export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
 
 
 # GO
@@ -56,7 +60,18 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
 
 [[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# Lazy-load nvm: sourcing nvm.sh eagerly runs its own nvm_auto hook on every
+# shell startup (~300-400ms) even when node isn't used. Defer that cost to the
+# first actual nvm/node/npm/npx call in a given shell.
+_nvm_lazy_load() {
+    unset -f nvm node npm npx
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+for _nvm_cmd in nvm node npm npx; do
+    eval "${_nvm_cmd}() { _nvm_lazy_load; ${_nvm_cmd} \"\$@\"; }"
+done
+unset _nvm_cmd
 
 eval "$(rbenv init - zsh)"
 
@@ -97,70 +112,30 @@ alias ccr='claude --resume'
 ############################
 # Plugins
 ############################
-# make sure we have zplug installed
-if [[ ! -d $HOME/.zplug ]];  then
-    printf 'Install zplug? [y/N]: '
-    if read -q; then
-        echo; git clone https://github.com/b4b4r07/zplug ~/.zplug
-    fi
+# compdef (needed by several oh-my-zsh plugins below) comes from compinit.
+# Skip the compaudit security scan unless the dump is more than a day old,
+# so this stays cheap on every shell.
+autoload -Uz compinit
+_zcompdump="$ZSH_CACHE_DIR/zcompdump"
+if [[ -n ${_zcompdump}(#qN.mh+24) ]]; then
+    compinit -d "$_zcompdump"
+else
+    compinit -C -d "$_zcompdump"
 fi
+unset _zcompdump
 
-if [[ -f $HOME/.zplug/init.zsh ]]; then
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 
-    source $HOME/.zplug/init.zsh
-
-    # oh-my-zsh
-    zplug "plugins/colored-man-pages", from:oh-my-zsh
-    zplug "plugins/command-not-found", from:oh-my-zsh
-    zplug "plugins/common-aliases", from:oh-my-zsh
-    zplug "plugins/copyfile", from:oh-my-zsh
-    zplug "plugins/debian", from:oh-my-zsh
-    zplug "plugins/docker", from:oh-my-zsh
-    zplug "plugins/docker-compose", from:oh-my-zsh
-    zplug "plugins/dotenv", from:oh-my-zsh
-    zplug "plugins/flutter", from:oh-my-zsh
-    zplug "plugins/git", from:oh-my-zsh
-    zplug "plugins/go", from:oh-my-zsh
-    zplug "plugins/jsontools", from:oh-my-zsh
-    zplug "plugins/macOS", from:oh-my-zsh
-    zplug "plugins/node", from:oh-my-zsh
-    zplug "plugins/npm", from:oh-my-zsh
-    zplug "plugins/nvm", from:oh-my-zsh
-    zplug "plugins/pylint", from:oh-my-zsh
-    zplug "plugins/python", from:oh-my-zsh
-    zplug "plugins/systemd", from:oh-my-zsh
-    zplug "plugins/thefuck", from:oh-my-zsh
-    zplug "plugins/tmux", from:oh-my-zsh
-    zplug "plugins/vscode", from:oh-my-zsh
-    zplug "plugins/web-search", from:oh-my-zsh
-    # zplug "plugins/yarn", from:oh-my-zsh
-
-    # prezto
-    zplug "modules/completion", from:prezto
-    zplug "modules/directory",  from:prezto
-
-    # commands
-    zplug "so-fancy/diff-so-fancy", as:command
-
-    # zsh users
-    #zplug "jeffreytse/zsh-vi-mode"
-    zplug "zsh-users/zsh-autosuggestions"
-    zplug "zsh-users/zsh-history-substring-search"
-    zplug "romkatv/powerlevel10k", as:theme
-    zplug "zsh-users/zsh-syntax-highlighting"  
-
-    # themes / appearance
-
-    if ! zplug check --verbose; then
-        printf 'Install Plugins? [y/N]: '
-        if read -q; then
-            echo; zplug install
-        fi
-    fi
-
-    zplug load
-
+# Static loading: only recompile the bundle when the plugin list changes,
+# otherwise just source the pre-built (fast) plugin file.
+zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+    antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
 fi
+source ${zsh_plugins}.zsh
+
+# powerlevel10k disabled while testing starship as the prompt; to go back,
+# add `romkatv/powerlevel10k` to ~/.zsh_plugins.txt
 
 #############################
 # Keybindings
@@ -185,7 +160,21 @@ bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Disabled while testing starship; uncomment to go back to p10k.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+############################
+# Starship prompt
+############################
+if command -v starship >/dev/null; then
+    eval "$(starship init zsh)"
+else
+    printf 'starship not found. Install via Homebrew? [y/N]: '
+    if read -q; then
+        echo; brew install starship && eval "$(starship init zsh)"
+    fi
+    echo
+fi
 
 
 [[ -f /Users/underwoc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/underwoc/.dart-cli-completion/zsh-config.zsh || true
