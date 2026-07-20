@@ -124,15 +124,27 @@ else
 fi
 unset _zcompdump
 
-source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
-
-# Static loading: only recompile the bundle when the plugin list changes,
-# otherwise just source the pre-built (fast) plugin file.
-zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
-if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
-    antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+_antidote_path=/opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+if [[ ! -f $_antidote_path ]]; then
+    printf 'antidote not found. Install via Homebrew? [y/N]: '
+    if read -q; then
+        echo; brew install antidote
+    fi
+    echo
 fi
-source ${zsh_plugins}.zsh
+
+if [[ -f $_antidote_path ]]; then
+    source $_antidote_path
+
+    # Static loading: only recompile the bundle when the plugin list changes,
+    # otherwise just source the pre-built (fast) plugin file.
+    zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
+    if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+        antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+    fi
+    source ${zsh_plugins}.zsh
+fi
+unset _antidote_path
 
 # powerlevel10k disabled while testing starship as the prompt; to go back,
 # add `romkatv/powerlevel10k` to ~/.zsh_plugins.txt
