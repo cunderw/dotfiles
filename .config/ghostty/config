@@ -3,7 +3,7 @@ font-family = FiraMono Nerd Font Mono
 
 # keybindings
 keybind = performable:super+v=paste_from_clipboard
-keybind = global:cmd+grave_accent=toggle_quick_terminal
+# keybind = global:cmd+grave_accent=toggle_quick_terminal
 macos-option-as-alt = true
 
 # aesthetics

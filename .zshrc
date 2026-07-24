@@ -1,9 +1,3 @@
-# Enable p10k-instant-prompt
-# (disabled while testing starship as the prompt; uncomment to go back to p10k)
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
 ############################
 # Environment Setup
 ############################
@@ -54,25 +48,18 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE="true"
 # Sourced Files / Utilities
 ############################
 
-#for f in ~/.scripts/sourced/*; do
-#    . $f
-#done
+for f in ~/.scripts/sourced/*; do
+    . $f
+done
 
 [[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
-# Lazy-load nvm: sourcing nvm.sh eagerly runs its own nvm_auto hook on every
-# shell startup (~300-400ms) even when node isn't used. Defer that cost to the
-# first actual nvm/node/npm/npx call in a given shell.
-_nvm_lazy_load() {
-    unset -f nvm node npm npx
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
-for _nvm_cmd in nvm node npm npx; do
-    eval "${_nvm_cmd}() { _nvm_lazy_load; ${_nvm_cmd} \"\$@\"; }"
-done
-unset _nvm_cmd
 
+# nvm setup
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+
+# ruby setup
 eval "$(rbenv init - zsh)"
 
 # fix nvim breaking cursor
@@ -109,6 +96,7 @@ alias cc=claude
 alias ccc='claude --continue'
 alias ccd='claude --dangerously-skip-permissions'
 alias ccr='claude --resume'
+
 ############################
 # Plugins
 ############################
@@ -146,8 +134,6 @@ if [[ -f $_antidote_path ]]; then
 fi
 unset _antidote_path
 
-# powerlevel10k disabled while testing starship as the prompt; to go back,
-# add `romkatv/powerlevel10k` to ~/.zsh_plugins.txt
 
 #############################
 # Keybindings
@@ -171,9 +157,6 @@ bindkey "^?" backward-delete-char
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# Disabled while testing starship; uncomment to go back to p10k.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ############################
 # Starship prompt
@@ -190,3 +173,15 @@ fi
 
 
 [[ -f /Users/underwoc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/underwoc/.dart-cli-completion/zsh-config.zsh || true
+
+# --- ensure nvm's default node is statically on PATH ---
+# nvm's own activation doesn't survive Claude Code's shell-snapshot generation
+# (node gets stripped on rc re-source), so npx-based MCP servers can't find `node`.
+# A plain export at end-of-rc is captured in the snapshot. See Obsidian note:
+# "MCP npx Shell Snapshot Bug".
+if [ -r "$NVM_DIR/alias/default" ]; then
+  __nvm_def="$(command cat "$NVM_DIR/alias/default")"
+  __nvm_dir="$(command ls -d "$NVM_DIR"/versions/node/v"${__nvm_def#v}"* 2>/dev/null | sort -V | tail -1)"
+  [ -n "$__nvm_dir" ] && [ -x "$__nvm_dir/bin/node" ] && export PATH="$__nvm_dir/bin:$PATH"
+  unset __nvm_def __nvm_dir
+fi
