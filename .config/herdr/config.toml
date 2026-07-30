@@ -77,6 +77,11 @@ detach = ["prefix+d", "prefix+q"]
 goto = "prefix+g"
 new_worktree = "prefix+ctrl+g"
 
+# prefix+shift+d is tmux's `bind D` dev layout (see [[keys.command]] below), so
+# close_workspace moves to prefix+ctrl+d. Set explicitly because herdr silently
+# picks a winner for duplicate bindings rather than warning.
+close_workspace = "prefix+ctrl+d"
+
 # --- Workspace cycling ------------------------------------------------------
 # Mirrors the stock tab bindings one level up:
 #   prefix+n / prefix+p            next / previous tab   (herdr default)
@@ -150,9 +155,13 @@ description = "ranger"
 width = "80%"
 height = "80%"
 
-# tmux's `bind D` dev layout is intentionally NOT bound: prefix+shift+d is
-# herdr's close_workspace and that keeps priority. The script still exists and
-# can be run by hand:  ~/.config/herdr/scripts/dev-layout.sh
+# tmux: bind D — nvim (75% wide) | claude (top-right 75%), shell (bottom-right)
+# Displaces herdr's close_workspace, which moves to prefix+ctrl+d above.
+[[keys.command]]
+key = "prefix+shift+d"
+type = "shell"
+command = "~/.config/herdr/scripts/dev-layout.sh"
+description = "dev layout (nvim | claude / shell)"
 
 # ============================================================================
 # Installed plugins
