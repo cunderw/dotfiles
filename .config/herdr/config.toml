@@ -66,6 +66,11 @@ rename_workspace = ["prefix+shift+w", "prefix+<"]
 # which is where ranger lives below.
 reload_config = "prefix+r"
 
+# prefix+? is the generated cheatsheet (see [[keys.command]] below); herdr's
+# own flat list moves aside. Set explicitly — omitting it would restore the
+# default prefix+? and silently collide.
+help = "prefix+alt+slash"
+
 # tmux detaches on prefix+d; herdr ships prefix+q. Arrays let us keep both,
 # so neither reflex is wrong.
 detach = ["prefix+d", "prefix+q"]
@@ -126,11 +131,21 @@ navigate_pane_up = ""
 navigate_pane_right = ""
 
 # --- Pane focus -------------------------------------------------------------
-# Deliberately unbound. Pane navigation is ctrl+hjkl via herdr-splits
-# (plugin bindings further down), which also crosses nvim splits — prefix+hjkl
-# was pure duplication. The prefix+vim-key axis now means "spaces" instead:
-# prefix+j / prefix+k walk the space list (see next_workspace above).
+# Pane navigation is ctrl+hjkl via herdr-splits (plugin bindings further down),
+# which also crosses nvim splits — prefix+hjkl was pure duplication. The
+# prefix+vim-key axis means "spaces" instead: prefix+j / prefix+k walk the space
+# list (see next_workspace above).
+#
+# These MUST be set to "" explicitly. Deleting the lines does not unbind them,
+# it reverts them to herdr's defaults, which are exactly prefix+h/j/k/l — so
+# prefix+j ends up claimed by both focus_pane_down and next_workspace, and herdr
+# picks a winner silently. Omission is not unbinding.
+#
 # Fallbacks if the plugin ever breaks: prefix+tab cycles panes, and the mouse.
+focus_pane_left = ""
+focus_pane_down = ""
+focus_pane_up = ""
+focus_pane_right = ""
 
 # ============================================================================
 # Custom commands — the tmux popup binds
@@ -143,6 +158,19 @@ key = "prefix+shift+g"
 type = "popup"
 command = "~/.config/herdr/scripts/in-pane-cwd.sh lazygit"
 description = "lazygit"
+width = "80%"
+height = "80%"
+
+# prefix+? shows a grouped cheatsheet instead of herdr's flat built-in list.
+# Generated from herdr's defaults merged with this file, so it cannot drift.
+# `keys-help.py --conflicts` reports chords claimed by two actions — run it
+# after any binding change, since herdr does not warn about duplicates and a
+# config-only grep cannot see default-vs-override collisions.
+[[keys.command]]
+key = "prefix+?"
+type = "popup"
+command = "python3 ~/.config/herdr/scripts/keys-help.py"
+description = "keybinding cheatsheet"
 width = "80%"
 height = "80%"
 
