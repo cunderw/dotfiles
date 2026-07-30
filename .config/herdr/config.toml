@@ -1,0 +1,230 @@
+# herdr config — ported from ~/.tmux.conf
+#
+# Philosophy: tmux muscle memory wins every collision. Where herdr's stock
+# binding conflicted with a tmux one, herdr's native action was moved aside
+# (noted inline). Run `herdr --default-config` to see everything unset here.
+
+[theme]
+# Matches @powerkit_theme "tokyo-night" / variant "night".
+name = "tokyo-night"
+
+[ui]
+# tmux: set -g mouse on
+mouse_capture = true
+copy_on_select = true
+
+show_agent_labels_on_pane_borders = true
+agent_panel_sort = "spaces"
+[session]
+# Closest thing to tmux-resurrect/continuum: agent panes come back in their
+# native conversation sessions after a server restart.
+resume_agents_on_restore = true
+
+[experimental]
+# tmux: @resurrect-capture-pane-contents 'on' — replays pane screen history
+# after a restart. Layout restores; processes do not (herdr restarts nothing).
+pane_history = true
+
+[keys]
+prefix = "ctrl+b"
+
+# --- Unchanged from tmux (these were already herdr defaults) -----------------
+# bind c new-window -a
+new_tab = "prefix+c"
+# Shift = one container up, matching c/C : tab / workspace.
+# herdr's stock prefix+shift+n is kept alongside.
+new_workspace = ["prefix+shift+n", "prefix+shift+c"]
+# bind x killp / bind X killw
+close_pane = "prefix+x"
+close_tab = "prefix+shift+x"
+# setw -g mode-keys vi — copy mode is vi-style natively (v/y, /, ?, n/N, hjkl)
+copy_mode = "prefix+["
+
+# --- Splits: tmux % and " alongside herdr's own ------------------------------
+# tmux `bind %` = split-window -h = panes side by side  -> herdr split_vertical
+# tmux `bind "` = split-window -v = panes stacked       -> herdr split_horizontal
+# (herdr names these by the *divider*, tmux by the direction — hence the swap.)
+split_vertical = ["prefix+v", "prefix+%"]
+split_horizontal = ["prefix+minus", 'prefix+"']
+
+# --- Renaming ---------------------------------------------------------------
+# tmux `bind ,` = rename-window -> herdr rename_tab.
+# One comma family across all three levels:
+#   ,        tab        (tmux's rename-window)
+#   <  (shift+,)  workspace   — the container above
+#   ctrl+,       pane        — the container below
+# herdr's stock prefix+shift+{t,w,p} are kept alongside as fallbacks. That
+# matters most for ctrl+, : herdr's own docs warn that punctuation-with-modifiers
+# "may depend on your terminal", since ctrl+<punctuation> has no legacy terminal
+# encoding and needs CSI-u / extended keys to arrive at all.
+rename_pane = ["prefix+shift+p", "prefix+ctrl+,"]
+rename_tab = ["prefix+shift+t", "prefix+,"]
+rename_workspace = ["prefix+shift+w", "prefix+<"]
+
+# --- Collisions resolved in tmux's favor ------------------------------------
+# tmux `bind r source-file` = reload. herdr shipped this on prefix+shift+r,
+# which is where ranger lives below.
+reload_config = "prefix+r"
+
+# tmux detaches on prefix+d; herdr ships prefix+q. Arrays let us keep both,
+# so neither reflex is wrong.
+detach = ["prefix+d", "prefix+q"]
+
+# goto (session navigator) is back on its stock prefix+g; lazygit moved up to
+# prefix+shift+g to make room. That displaced new_worktree, which herdr ships on
+# prefix+shift+g — so it takes prefix+ctrl+g. Set explicitly
+# because herdr silently picks a winner for duplicate bindings.
+goto = "prefix+g"
+new_worktree = "prefix+ctrl+g"
+
+# --- Workspace cycling ------------------------------------------------------
+# Mirrors the stock tab bindings one level up:
+#   prefix+n / prefix+p            next / previous tab   (herdr default)
+#   prefix+ctrl+n / prefix+ctrl+p  next / previous workspace
+# Both are unset in herdr by default; tmux's analogue is prefix ) / prefix (.
+# prefix+j / prefix+k walk the space list directly, no need to open prefix+w
+# first. j = down = next, matching navigate mode. They used to be focus_pane
+# down/up, which was redundant with the ctrl+hjkl plugin bindings.
+next_workspace = ["prefix+ctrl+n", "prefix+j"]
+previous_workspace = ["prefix+ctrl+p", "prefix+k"]
+
+# --- Agent rows in the sidebar ----------------------------------------------
+# herdr has no navigate-mode movement for agents — navigate mode only walks
+# workspaces and panes — so these are prefix actions that jump straight to an
+# agent row from anywhere. j/k stays the vertical axis; ctrl means "the other
+# list": prefix+w then j/k walks workspaces, prefix+ctrl+j/k walks agents.
+next_agent = "prefix+ctrl+j"
+previous_agent = "prefix+ctrl+k"
+
+# --- Resize: tmux had `bind H/J/K/L resize-pane ±10` ------------------------
+# herdr has no "resize by N" action, only a resize *mode*. All four reflex keys
+# enter that mode; then h/j/k/l resize repeatedly until Esc — no need to
+# re-press prefix per nudge. Change to just "prefix+r"... no, that's reload now;
+# use "prefix+alt+r" if you want a single stock binding instead.
+resize_mode = [
+  "prefix+shift+h",
+  "prefix+shift+j",
+  "prefix+shift+k",
+  "prefix+shift+l",
+]
+
+# --- Navigate mode (prefix+w) -----------------------------------------------
+# Vim keys drive the *workspace* list; pane movement is unbound here so j/k
+# never jump sideways into panes mid-list. Arrow keys kept alongside.
+# NOTE: herdr's default config says the left/right arrows "always" focus panes,
+# so that pair may be hardwired and survive being unset below.
+navigate_workspace_up = ["up", "k"]
+navigate_workspace_down = ["down", "j"]
+navigate_pane_left = ""
+navigate_pane_down = ""
+navigate_pane_up = ""
+navigate_pane_right = ""
+
+# --- Pane focus -------------------------------------------------------------
+# Deliberately unbound. Pane navigation is ctrl+hjkl via herdr-splits
+# (plugin bindings further down), which also crosses nvim splits — prefix+hjkl
+# was pure duplication. The prefix+vim-key axis now means "spaces" instead:
+# prefix+j / prefix+k walk the space list (see next_workspace above).
+# Fallbacks if the plugin ever breaks: prefix+tab cycles panes, and the mouse.
+
+# ============================================================================
+# Custom commands — the tmux popup binds
+# ============================================================================
+
+# tmux: bind g display-popup -w 80% -h 80% -E "lazygit"
+# Moved off prefix+g (now goto) to prefix+shift+g.
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+command = "~/.config/herdr/scripts/in-pane-cwd.sh lazygit"
+description = "lazygit"
+width = "80%"
+height = "80%"
+
+# tmux: bind R display-popup -w 80% -h 80% -E "ranger"
+[[keys.command]]
+key = "prefix+shift+r"
+type = "popup"
+command = "~/.config/herdr/scripts/in-pane-cwd.sh ranger"
+description = "ranger"
+width = "80%"
+height = "80%"
+
+# tmux's `bind D` dev layout is intentionally NOT bound: prefix+shift+d is
+# herdr's close_workspace and that keeps priority. The script still exists and
+# can be run by hand:  ~/.config/herdr/scripts/dev-layout.sh
+
+# ============================================================================
+# Installed plugins
+# ============================================================================
+
+# termscope — scan the focused pane for visible file paths, open in a picker.
+# Requires Television (tv), installed by the plugin's build step via Homebrew.
+# The `open-links` action (same scan, for URLs) is deliberately left unbound.
+[[keys.command]]
+key = "prefix+ctrl+o"
+type = "plugin_action"
+command = "termscope.open"
+description = "termscope: open visible file picker"
+
+# ============================================================================
+# herdr-splits.nvim — navigation + resizing across nvim splits and herdr panes
+# ============================================================================
+# Replaces vim-herdr-navigation (still installed but unbound, as a rollback).
+# The nvim side is plugins/herdr-splits.nvim, scoped with cond HERDR_ENV == 1;
+# vim-tmux-navigator takes the inverse cond so one plugin owns the keys per
+# multiplexer.
+#
+# Resize is alt+SHIFT+hjkl, not upstream's alt+hjkl: mini.move (ships with
+# LazyVim) owns alt+hjkl for line movement, and the herdr binding would eat
+# the key before nvim ever saw it.
+# alt+* resizing needs the terminal to send Option as Meta:
+#   iTerm2: Profiles -> Keys -> Left Option key -> Esc+
+
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+description = "navigate left (nvim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+description = "navigate down (nvim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+description = "navigate up (nvim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "herdr-splits.nav-right"
+description = "navigate right (nvim/herdr)"
+
+[[keys.command]]
+key = "alt+shift+h"
+type = "plugin_action"
+command = "herdr-splits.resize-left"
+description = "resize left (nvim/herdr)"
+
+[[keys.command]]
+key = "alt+shift+j"
+type = "plugin_action"
+command = "herdr-splits.resize-down"
+description = "resize down (nvim/herdr)"
+
+[[keys.command]]
+key = "alt+shift+k"
+type = "plugin_action"
+command = "herdr-splits.resize-up"
+description = "resize up (nvim/herdr)"
+
+[[keys.command]]
+key = "alt+shift+l"
+type = "plugin_action"
+command = "herdr-splits.resize-right"
+description = "resize right (nvim/herdr)"

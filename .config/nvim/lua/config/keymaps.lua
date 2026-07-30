@@ -127,3 +127,9 @@ vim.api.nvim_create_autocmd("DirChanged", {
     setup_flutter_keymaps()
   end,
 })
+
+-- <C-h/j/k/l> and <M-h/j/k/l> are owned by plugin specs, not this file:
+--   inside herdr  -> plugins/herdr-splits.lua
+--   outside herdr -> plugins/tmux.lua (vim-tmux-navigator)
+-- Both declare them in a lazy `keys` table, which is what stops LazyVim
+-- claiming them on VeryLazy. Do not add them here as well.
