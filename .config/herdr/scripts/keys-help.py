@@ -175,6 +175,34 @@ def main() -> int:
     if "--conflicts" in sys.argv:
         return report_conflicts({**defaults, **user}, commands)
 
+    if "--search" in sys.argv:
+        # Flat one-line-per-binding list for a fuzzy finder. Key first so typing
+        # a chord filters; group last so typing "space" or "pane" also filters.
+        eff = {**defaults, **user}
+        rows: list[tuple[str, str, str]] = []
+        for group, action, label in CATALOG:
+            ks = chords(eff.get(action))
+            if ks:
+                rows.append((" / ".join(ks), label, group))
+        for cmd in commands:
+            if isinstance(cmd, dict) and cmd.get("key"):
+                rows.append(
+                    (cmd["key"], cmd.get("description") or cmd.get("command", ""), "Commands")
+                )
+        for action, label in NAVIGATE:
+            ks = chords(eff.get(action))
+            if ks:
+                rows.append((" / ".join(ks), label, "Navigate mode"))
+        if not rows:
+            return 1
+        # Cap the columns: resize_mode binds four chords and would otherwise pad
+        # every other row out to its width. Overflow just shifts that one row.
+        kw = min(max(len(r[0]) for r in rows), 34)
+        lw = min(max(len(r[1]) for r in rows), 38)
+        for key, label, group in rows:
+            print(f"{key.ljust(kw)}  {label.ljust(lw)}  {group}")
+        return 0
+
     def C(code: str, text: str) -> str:
         return text if plain else f"\033[{code}m{text}\033[0m"
 

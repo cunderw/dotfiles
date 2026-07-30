@@ -166,13 +166,17 @@ height = "80%"
 # `keys-help.py --conflicts` reports chords claimed by two actions — run it
 # after any binding change, since herdr does not warn about duplicates and a
 # config-only grep cannot see default-vs-override collisions.
+# Fuzzy-searchable: type a chord ("ctrl+g"), an action ("rename"), or a group
+# ("space") to filter. --source-command rather than a pipe, since the popup has
+# no stdin to inherit. The grouped, browsable version is the same script with no
+# flag: `python3 ~/.config/herdr/scripts/keys-help.py`
 [[keys.command]]
 key = "prefix+?"
 type = "popup"
-command = "python3 ~/.config/herdr/scripts/keys-help.py"
-description = "keybinding cheatsheet"
+command = "tv --source-command 'python3 ~/.config/herdr/scripts/keys-help.py --search' --no-preview --input-prompt 'key> ' --input-header 'herdr keybindings'"
+description = "keybinding search"
 width = "80%"
-height = "80%"
+height = "70%"
 
 # tmux: bind R display-popup -w 80% -h 80% -E "ranger"
 [[keys.command]]
