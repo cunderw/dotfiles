@@ -179,7 +179,7 @@ description = "termscope: open visible file picker"
 # ============================================================================
 # herdr-splits.nvim — navigation + resizing across nvim splits and herdr panes
 # ============================================================================
-# Replaces vim-herdr-navigation (still installed but unbound, as a rollback).
+# Replaced vim-herdr-navigation, which is fully removed.
 # The nvim side is plugins/herdr-splits.nvim, scoped with cond HERDR_ENV == 1;
 # vim-tmux-navigator takes the inverse cond so one plugin owns the keys per
 # multiplexer.
