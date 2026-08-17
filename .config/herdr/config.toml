@@ -6,8 +6,9 @@
 
 [theme]
 # Matches @powerkit_theme "tokyo-night" / variant "night".
-name = "tokyo-night"
+name = "terminal"
 
+auto_switch = false
 [ui]
 # tmux: set -g mouse on
 mouse_capture = true
