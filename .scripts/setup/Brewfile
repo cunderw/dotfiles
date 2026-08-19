@@ -155,8 +155,6 @@ brew "netpbm"
 brew "gts"
 # Utility library required by aqbanking and related software
 brew "gwenhywfar"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
 # Improved top (interactive process viewer)
 brew "htop"
 # Spell checker and morphological analyzer
