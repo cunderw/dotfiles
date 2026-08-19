@@ -1,5 +1,4 @@
 tap "epk/epk"
-tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 # Plugin manager for zsh, inspired by antigen and antibody
 brew "antidote"
 # Codec library for encoding and decoding AV1 video streams
@@ -174,8 +173,6 @@ brew "lazygit"
 brew "leptonica"
 # General purpose TCP-IP emulator
 brew "libslirp"
-# HTTP client/server library for GNOME
-brew "libsoup@2"
 # C library SSHv1/SSHv2 client and server protocols
 brew "libssh"
 # XML security library
@@ -197,7 +194,7 @@ brew "mpv"
 # Interactive cheatsheet tool for the command-line
 brew "navi"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim", args: ["HEAD"]
+brew "neovim"
 # Retrieves currently playing media, and simulates media actions
 brew "nowplaying-cli"
 # Development kit for the Java programming language
@@ -214,8 +211,6 @@ brew "poppler"
 brew "python@3.10"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.11"
-# Cross-platform application and UI framework
-brew "qt@5"
 # File browser
 brew "ranger"
 # Ruby version manager
@@ -254,17 +249,10 @@ brew "wget"
 brew "xcodegen"
 # JavaScript package manager
 brew "yarn"
-# Command-line interface for 1Password
-cask "1password-cli"
 # Audio utility
 cask "background-music"
 # Display management tool
 cask "betterdisplay"
-# Browser for SQLite databases
-cask "db-browser-for-sqlite"
-# Universal database tool and SQL client
-cask "dbeaver-community"
-cask "dozer"
 # Web browser
 cask "firefox"
 cask "font-fira-code"
@@ -275,18 +263,8 @@ cask "font-monaspace"
 cask "ghostty"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Standalone app for debugging React Native apps
-cask "react-native-debugger"
-# Frontend for emulators, game engines and media players (OpenGL graphics API)
-cask "retroarch"
-# Team communication and collaboration software
-cask "slack"
-# Xcode Extension for reformatting Swift code
-cask "swiftformat-for-xcode"
 # JDK from the Eclipse Foundation (Adoptium)
 cask "temurin"
-# Wine wrapper built with SwiftUI
-cask "whisky"
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/ramya-rao-a/go-outline"
 go "golang.org/x/tools/cmd/goimports"
