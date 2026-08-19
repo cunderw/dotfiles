@@ -249,8 +249,6 @@ brew "wget"
 brew "xcodegen"
 # JavaScript package manager
 brew "yarn"
-# Audio utility
-cask "background-music"
 # Display management tool
 cask "betterdisplay"
 # Web browser
@@ -263,8 +261,6 @@ cask "font-monaspace"
 cask "ghostty"
 # Control your tools with a few keystrokes
 cask "raycast"
-# JDK from the Eclipse Foundation (Adoptium)
-cask "temurin"
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/ramya-rao-a/go-outline"
 go "golang.org/x/tools/cmd/goimports"
