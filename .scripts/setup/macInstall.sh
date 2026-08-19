@@ -1,35 +1,61 @@
 #!/bin/bash
+# Bootstrap a new Mac.
+#
+# Run order:
+#   1. macInstall.sh   - Homebrew, then every package from ./Brewfile
+#   2. macSetup.sh     - macOS defaults
+#   3. herdrSetup.sh   - herdr plugins (machine-local, not brew-installable)
+#
+# Packages are NOT listed here any more. They live in ./Brewfile, which is
+# generated from the machine so it cannot drift out of date the way a
+# hand-maintained `brew install` list did. Regenerate after installing
+# anything you want to keep:
+#
+#   brew bundle dump --force --file="$HOME/.scripts/setup/Brewfile"
+#
+set -euo pipefail
 
-cd ~
-# install brew
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BREWFILE="$SCRIPT_DIR/Brewfile"
 
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>/Users/cunderw/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# --- Homebrew ---------------------------------------------------------------
 
-# brew packages
-brew install neovim
-brew install tmux
-brew install wget
-brew install fzf
-brew install bat
-brew install navi
-brew install thefuck
-brew install pnpm
-brew install alt-tab
-brew install fzf
-brew install ripgrep
-brew install lazygit
-# ranger: the prefix+R popup in both .tmux.conf and .config/herdr/config.toml
-brew install ranger
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# herdr (terminal multiplexer) + Television, the fuzzy picker termscope needs.
-# Plugins are installed separately: .scripts/setup/herdrSetup.sh
-brew install herdr
-brew install television
+BREW_PREFIX=/opt/homebrew
+[ -x "$BREW_PREFIX/bin/brew" ] || BREW_PREFIX=/usr/local  # Intel fallback
 
-# casks
-brew tap homebrew/cask-fonts
-brew install --cask font-fira-mono-nerd-font
+# Put brew on PATH for login shells, once. Appending unconditionally is how
+# the old version of this script ended up with duplicate lines.
+if ! grep -q 'brew shellenv' "$HOME/.zprofile" 2>/dev/null; then
+    echo "eval \"\$($BREW_PREFIX/bin/brew shellenv)\"" >>"$HOME/.zprofile"
+fi
+eval "$("$BREW_PREFIX/bin/brew" shellenv)"
 
-# apps
-brew install --cask discord
+# --- Packages ---------------------------------------------------------------
+
+# `brew bundle` is built into Homebrew 4+; the homebrew/bundle tap is obsolete.
+# Casks, taps and fonts all come from the Brewfile too - fonts moved into
+# homebrew/cask in 2024, so no font tap is needed either.
+
+if [ ! -f "$BREWFILE" ]; then
+    echo "No Brewfile at $BREWFILE" >&2
+    exit 1
+fi
+
+echo "Installing packages from $BREWFILE ..."
+brew bundle install --file="$BREWFILE"
+
+# --- Next steps -------------------------------------------------------------
+
+cat <<'EOF'
+
+Homebrew packages installed. Remaining steps:
+
+  ~/.scripts/setup/macSetup.sh     # macOS defaults (Finder, Dock, Safari...)
+  ~/.scripts/setup/herdrSetup.sh   # herdr plugins - see that script's notes
+
+EOF

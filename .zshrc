@@ -52,7 +52,6 @@ for f in ~/.scripts/sourced/*; do
     . $f
 done
 
-[[ ! -f $HOME/.secrets ]] || source $HOME/.secrets
 [[ ! -f $HOME/.cargo/env ]] || source $HOME/.cargo/env
 
 # nvm setup
@@ -90,7 +89,6 @@ alias zconfig="vim ~/.zshrc"
 alias zreload="exec zsh"
 alias npmt="npm run test"
 alias ftest='flutter test | grep -F "[E]"'
-alias icerts="xcrun simctl keychain booted add-root-cert '/Library/Application Support/Netskope/STAgent/data/nscacert.pem'"
 alias cc=claude
 alias ccc='claude --continue'
 alias ccd='claude --dangerously-skip-permissions'
@@ -171,7 +169,6 @@ else
 fi
 
 
-[[ -f /Users/underwoc/.dart-cli-completion/zsh-config.zsh ]] && . /Users/underwoc/.dart-cli-completion/zsh-config.zsh || true
 
 # --- ensure nvm's default node is statically on PATH ---
 # nvm's own activation doesn't survive Claude Code's shell-snapshot generation

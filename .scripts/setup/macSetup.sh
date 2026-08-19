@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Setting column view as default"
-defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
 
 echo "Show file extensions"
 defaults write -g AppleShowAllExtensions -bool true
@@ -12,7 +12,7 @@ echo "Show ~/Library"
 chflags nohidden ~/Library
 
 echo "New finder windows open in home dir"
-defaults read com.apple.finder NewWindowTargetPath -string "file:///Users/cunderw"
+defaults write com.apple.finder NewWindowTargetPath -string "file:///Users/cunderw"
 
 echo "Hide mounted volumes from desktop"
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
@@ -39,7 +39,10 @@ defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 echo "You may have to logout and log back in for this change to take effect."
 
 echo "Allow Applications to be installed from anywhere"
-sudo spctl --master-disable
+# spctl --master-disable was removed in macOS 15+; --global-disable now also
+# requires a manual toggle in System Settings > Privacy & Security.
+# Left as a no-op on purpose - do it in the UI if you want it.
+# sudo spctl --global-disable
 
 echo "Disable The 'Are You Sure You Want To Open This Application? Dialog"
 defaults write com.apple.LaunchServices LSQuarantine -bool false
@@ -48,7 +51,7 @@ echo "Save screenshots as PNGs"
 defaults write com.apple.screencapture type -string "png"
 
 echo "Set the icon size of Dock items to 36 pixels"
-defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock tilesize -int 38
 
 echo "Automaticall hide and show dock"
 defaults write com.apple.dock autohide -bool true
@@ -64,7 +67,7 @@ echo "Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 echo "Show only open applications in the Dock"
-defaults write com.apple.dock static-only -bool true
+defaults write com.apple.dock static-only -bool false
 
 #####################
 # Finder

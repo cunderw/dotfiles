@@ -1,0 +1,306 @@
+tap "epk/epk"
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
+# Plugin manager for zsh, inspired by antigen and antibody
+brew "antidote"
+# Library for manipulating PNG images
+brew "libpng"
+# TIFF library and utilities
+brew "libtiff"
+# Color management engine supporting ICC profiles
+brew "little-cms2"
+# Image format providing lossless and lossy compression for web images
+brew "webp"
+# New file format for still image compression
+brew "jpeg-xl"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
+# Companion library to apr, the Apache Portable Runtime library
+brew "apr-util"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# Download with resuming and segmented downloading
+brew "aria2"
+# Code searching, linting, rewriting
+brew "ast-grep"
+# Message bus system, providing inter-application communication
+brew "dbus"
+# Core application library for C
+brew "glib"
+# Protocol definitions and daemon for D-Bus at-spi
+brew "at-spi2-core"
+# Automatic configure script builder
+brew "autoconf"
+# Tool for generating GNU Standards-compliant Makefiles
+brew "automake"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# C library of Git core methods that is re-entrant and linkable
+brew "libgit2"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Arbitrary precision numeric processing language
+brew "bc"
+# Software library to render fonts
+brew "freetype"
+# Real-time data compression library
+brew "lzo"
+# Low-level library for pixel manipulation
+brew "pixman"
+# Vector graphics library with cross-device output support
+brew "cairo"
+# Share macOS clipboard with tmux and other local and remote apps
+brew "clipper"
+# Cross-platform make
+brew "cmake"
+# YAML Parser
+brew "libyaml"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# GNU data recovery tool
+brew "ddrescue"
+# Text processing system for reStructuredText
+brew "docutils"
+# Compression/decompression library aiming for high speed
+brew "snappy"
+# Collection of reusable C++ library artifacts developed at Facebook
+brew "folly"
+# Shared library for Watchman and Eden projects
+brew "edencommon"
+# C++14 implementation of the TLS-1.3 standard
+brew "fizz"
+# Modular, composable client/server abstractions framework
+brew "wangle"
+# Thrift functions for querying information from a service
+brew "fb303"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# International domain name library (IDNA2008, Punycode and TR46)
+brew "libidn2"
+# Low-level cryptographic library
+brew "nettle"
+# Validating, recursive, caching DNS resolver
+brew "unbound"
+# GNU Transport Layer Security (TLS) Library
+brew "gnutls"
+# OpenType text shaping engine
+brew "harfbuzz"
+# Image processing and image analysis library
+brew "leptonica"
+# Subtitle renderer for the ASS/SSA subtitle format
+brew "libass"
+# Framework for layout and rendering of i18n text
+brew "pango"
+# OCR (Optical Character Recognition) engine
+brew "tesseract"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GNU awk utility
+brew "gawk"
+# Library for encoding and decoding .avif files
+brew "libavif"
+# Graphics library to dynamically manipulate images
+brew "gd"
+# Toolkit for image loading and pixel buffer manipulation
+brew "gdk-pixbuf"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Quickly rewrite git repository history
+brew "git-filter-repo"
+# Open-source GitLab command-line tool
+brew "glab"
+# GSettings schemas for desktop components
+brew "gsettings-desktop-schemas"
+# Network related modules for glib
+brew "glib-networking"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
+# Library for USB device access
+brew "libusb"
+# GNU Privacy Guard (OpenPGP)
+brew "gnupg"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# Generate introspection data for GObject libraries
+brew "gobject-introspection"
+# Library access to GnuPG
+brew "gpgme"
+# Portable Foreign Function Interface library
+brew "libffi"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# Thin layer of graphic data types
+brew "graphene"
+# Toolkit for creating graphical user interfaces
+brew "gtk+3"
+# Toolkit for creating graphical user interfaces
+brew "gtk4"
+# Library for JSON, based on GLib
+brew "json-glib"
+# HTTP client/server library for GNOME
+brew "libsoup"
+# Python 3 bindings for the Cairo graphics library
+brew "py3cairo"
+# GNOME Python bindings (based on GObject Introspection)
+brew "pygobject3"
+# Development framework for multimedia applications
+brew "gstreamer"
+# Image manipulation
+brew "netpbm"
+# GNU triangulated surface library
+brew "gts"
+# Cross-platform application and UI framework
+brew "qt@5"
+# Utility library required by aqbanking and related software
+brew "gwenhywfar"
+# Agent multiplexer that lives in your terminal
+brew "herdr"
+# Improved top (interactive process viewer)
+brew "htop"
+# Spell checker and morphological analyzer
+brew "hunspell"
+# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "iperf3"
+# Image manipulation library
+brew "jpeg", link: true
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Handy way to save and run project-specific commands
+brew "just"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.10"
+# Library for German banks
+brew "ktoblzcheck"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Library to render SVG files using Cairo
+brew "librsvg"
+# General purpose TCP-IP emulator
+brew "libslirp"
+# HTTP client/server library for GNOME
+brew "libsoup@2"
+# C library SSHv1/SSHv2 client and server protocols
+brew "libssh"
+# XML security library
+brew "libxmlsec1"
+# Small build system for use with gyp or CMake
+brew "ninja"
+# Fast and user friendly build system
+brew "meson"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
+# Remote terminal application
+brew "mosh"
+# Video processing framework with simplicity in mind
+brew "vapoursynth"
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
+# Media player based on MPlayer and mplayer2
+brew "mpv"
+# Interactive cheatsheet tool for the command-line
+brew "navi"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim", args: ["HEAD"]
+# Retrieves currently playing media, and simulates media actions
+brew "nowplaying-cli"
+# Development kit for the Java programming language
+brew "openjdk"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# Library to simplify the interaction with PKCS#11
+brew "pkcs11-helper"
+# Fast, disk space efficient package manager
+brew "pnpm"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# File browser
+brew "ranger"
+# Ruby version manager
+brew "rbenv"
+# Rsync for cloud storage
+brew "rclone"
+# Perl-powered file rename script with many helpful built-ins
+brew "rename"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# Rust toolchain installer
+brew "rustup"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Formatting technology for Swift source code
+brew "swift-format"
+# General purpose fuzzy finder TUI
+brew "television"
+# User interface to the TELNET protocol
+brew "telnet"
+# Terminal multiplexer
+brew "tmux"
+# USB traffic redirection library
+brew "usbredir"
+# Ethernet compliant virtual network
+brew "vde"
+# Internet file retriever
+brew "wget"
+# Generate your Xcode project from a spec file and your folder structure
+brew "xcodegen"
+# JavaScript package manager
+brew "yarn"
+# Command-line interface for 1Password
+cask "1password-cli"
+# Audio utility
+cask "background-music"
+# Display management tool
+cask "betterdisplay"
+# Browser for SQLite databases
+cask "db-browser-for-sqlite"
+# Universal database tool and SQL client
+cask "dbeaver-community"
+cask "dozer"
+# Web browser
+cask "firefox"
+cask "font-fira-code"
+cask "font-fira-mono-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-monaspace"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Control your tools with a few keystrokes
+cask "raycast"
+# Standalone app for debugging React Native apps
+cask "react-native-debugger"
+# Frontend for emulators, game engines and media players (OpenGL graphics API)
+cask "retroarch"
+# Team communication and collaboration software
+cask "slack"
+# Xcode Extension for reformatting Swift code
+cask "swiftformat-for-xcode"
+# JDK from the Eclipse Foundation (Adoptium)
+cask "temurin"
+# Wine wrapper built with SwiftUI
+cask "whisky"
+go "github.com/go-delve/delve/cmd/dlv"
+go "github.com/ramya-rao-a/go-outline"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/fatih/gomodifytags"
+go "github.com/haya14busa/goplay/cmd/goplay"
+go "golang.org/x/tools/gopls"
+go "github.com/cweill/gotests/gotests"
+go "github.com/josharian/impl"
+go "github.com/mgechev/revive"
+go "honnef.co/go/tools/cmd/staticcheck"
+go "golang.org/x/website/tour"
+cargo "stylua"
+npm "corepack"
+npm "firebase-tools"
+npm "openclaw"
