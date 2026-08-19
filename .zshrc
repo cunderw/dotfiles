@@ -154,6 +154,16 @@ bindkey "^?" backward-delete-char
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 
+# fzf shell integration — ctrl+r history, ctrl+t files, alt+c cd.
+# fzf arrived only as a dependency of `navi` and was never wired up; bound
+# deliberately 2026-08-19. Sourced AFTER the antidote plugins and after
+# `bindkey -v` so it captures the right default completion widget and its
+# viins/vicmd bindings are not clobbered. Tab is unchanged unless you type
+# the `**` trigger.
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
+
 
 ############################
 # Starship prompt
