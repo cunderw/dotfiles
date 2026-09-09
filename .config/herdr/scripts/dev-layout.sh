@@ -3,9 +3,11 @@
 # Port of the tmux `bind D` dev layout, bound to prefix+shift+D.
 #
 #   +---------------------------+----------------+
-#   |                           |  claude  (75%) |
-#   |      nvim  (75% wide)     +----------------+
-#   |                           |  shell   (25%) |
+#   |                           |                |
+#   |      nvim  (75% tall)     |  claude (100%) |
+#   |                           |                |
+#   +---------------------------+                |
+#   |      shell (25% tall)     |                |
 #   +---------------------------+----------------+
 #
 # Differences from the tmux version: claude starts via `herdr agent start`
@@ -31,11 +33,11 @@ if [ -z "$base" ]; then
 fi
 
 # tmux used -c "#{pane_current_path}" on both splits.
-# Right column at 25% -> claude on top.
+# Right column at 25% -> claude, full height.
 right=$("$herdr" pane split "$base" --direction right --ratio 0.75 --cwd "$cwd" | jq -r '.result.pane.pane_id')
 
-# Split the right column: claude keeps 75%, shell gets the bottom 25%.
-shell=$("$herdr" pane split "$right" --direction down --ratio 0.75 --cwd "$cwd" | jq -r '.result.pane.pane_id')
+# Split the left column: nvim keeps 75% height, shell gets the bottom 25%.
+shell=$("$herdr" pane split "$base" --direction down --ratio 0.75 --cwd "$cwd" | jq -r '.result.pane.pane_id')
 
 "$herdr" tab rename "$tab" dev >/dev/null
 "$herdr" pane rename "$base" nvim >/dev/null
