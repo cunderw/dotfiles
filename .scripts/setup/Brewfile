@@ -247,8 +247,11 @@ brew "wget"
 brew "xcodegen"
 # JavaScript package manager
 brew "yarn"
+cask "balenaetcher"
 # Display management tool
 cask "betterdisplay"
+cask "chatgpt"
+cask "discord"
 # Web browser
 cask "firefox"
 cask "font-fira-code"
@@ -257,8 +260,23 @@ cask "font-hack-nerd-font"
 cask "font-monaspace"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+cask "heroic"
+cask "mac-mouse-fix"
+cask "moonlight"
+cask "obsidian"
 # Control your tools with a few keystrokes
 cask "raycast"
+cask "sony-ps-remote-play"
+cask "steam"
+cask "ultimaker-cura"
+cask "utm"
+cask "vlc"
+brew "mas"
+mas "1Blocker", id: 1365531024
+mas "Home Assistant", id: 1099568401
+mas "Numbers", id: 409203825
+mas "The Unarchiver", id: 425424353
+mas "Userscripts", id: 1463298887
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/ramya-rao-a/go-outline"
 go "golang.org/x/tools/cmd/goimports"
