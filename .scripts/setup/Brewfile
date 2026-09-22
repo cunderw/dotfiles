@@ -115,6 +115,8 @@ brew "gnu-sed"
 brew "libusb"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Generate introspection data for GObject libraries
@@ -175,10 +177,14 @@ brew "libslirp"
 brew "libssh"
 # XML security library
 brew "libxmlsec1"
+# Mac App Store command-line interface
+brew "mas"
 # Small build system for use with gyp or CMake
 brew "ninja"
 # Fast and user friendly build system
 brew "meson"
+# Deep clean and optimize your Mac
+brew "mole"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
 # Remote terminal application
@@ -223,6 +229,8 @@ brew "ripgrep"
 brew "rsync"
 # Rust toolchain installer
 brew "rustup"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Formatting technology for Swift source code
@@ -247,11 +255,10 @@ brew "wget"
 brew "xcodegen"
 # JavaScript package manager
 brew "yarn"
-cask "balenaetcher"
 # Display management tool
 cask "betterdisplay"
-cask "chatgpt"
-cask "discord"
+# Anthropic's official Claude AI desktop app
+cask "claude"
 # Web browser
 cask "firefox"
 cask "font-fira-code"
@@ -260,23 +267,21 @@ cask "font-hack-nerd-font"
 cask "font-monaspace"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-cask "heroic"
-cask "mac-mouse-fix"
-cask "moonlight"
-cask "obsidian"
+# Web browser
+cask "google-chrome"
+# Open-source video transcoder
+cask "handbrake-app"
 # Control your tools with a few keystrokes
 cask "raycast"
-cask "sony-ps-remote-play"
-cask "steam"
-cask "ultimaker-cura"
-cask "utm"
-cask "vlc"
-brew "mas"
 mas "1Blocker", id: 1365531024
+mas "Developer", id: 640199958
 mas "Home Assistant", id: 1099568401
+mas "Keynote", id: 361285480
 mas "Numbers", id: 409203825
+mas "Pages", id: 361309726
 mas "The Unarchiver", id: 425424353
 mas "Userscripts", id: 1463298887
+mas "Xcode", id: 497799835
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/ramya-rao-a/go-outline"
 go "golang.org/x/tools/cmd/goimports"
@@ -291,4 +296,7 @@ go "golang.org/x/website/tour"
 cargo "stylua"
 npm "corepack"
 npm "firebase-tools"
+npm "homeassistant-lsp"
 npm "openclaw"
+npm "tree-sitter-cli"
+npm "xcodebuildmcp"
