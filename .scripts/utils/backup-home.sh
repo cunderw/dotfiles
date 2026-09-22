@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 #
-# backup-home.sh — mirror the useful parts of /Users/cunderw onto the external
-# APFS drive at /Volumes/MacStorage/Backups/carson-mac, so a new Mac can be set
-# up from it offline.
+# backup-home.sh — mirror the useful parts of $HOME onto an external APFS
+# drive at $VOL/Backups/$BACKUP_NAME, so a new Mac can be set up from it
+# offline with ~/.scripts/setup/restore-home.sh. The drive, the name and every
+# path list come from ~/.config/home-backup/config.sh.
 #
 # Semantics: MIRROR. Sets A, C and D run with --delete, so a file removed from
 # the Mac is removed from the backup on the next run. --delete is only ever
-# pointed at a directory *inside* carson-mac. Set B (loose top-level dot files)
+# pointed at a directory *inside* the backup. Set B (loose top-level dot files)
 # runs without --delete, because its rsync source is a file list rather than a
 # directory and --delete against a file list is a foot-gun.
 #
 # Layout on the destination mirrors $HOME:
-#   carson-mac/.claude, carson-mac/.config, carson-mac/Dev/..., carson-mac/.zshrc
-# Logs are written next to carson-mac, in /Volumes/MacStorage/Backups/_logs/,
-# so they are never part of the restored home directory.
+#   <backup>/.claude, <backup>/.config, <backup>/Dev/..., <backup>/.zshrc
+# Logs are written next to it, in $VOL/Backups/_logs/, so they are never part
+# of the restored home directory.
 #
 # Usage:
 #   ./backup-home.sh          mirror everything
@@ -30,10 +31,17 @@
 #
 set -euo pipefail
 
-HOME_DIR="/Users/cunderw"
-VOL="/Volumes/MacStorage"
+# Everything machine-specific (drive, backup name, the path lists) lives in
+# ~/.config/home-backup/config.sh, which is not tracked in the dotfiles repo
+# but is inside the backup itself.
+HOME_DIR="$HOME"
+CONFIG="$HOME_DIR/.config/home-backup/config.sh"
+[[ -f "$CONFIG" ]] || { echo "ERROR: $CONFIG not found" >&2; exit 1; }
+# shellcheck source=/dev/null
+source "$CONFIG"
+: "${VOL:?config.sh must set VOL}" "${BACKUP_NAME:?config.sh must set BACKUP_NAME}"
 BACKUP_ROOT="$VOL/Backups"
-DST="$BACKUP_ROOT/carson-mac"
+DST="$BACKUP_ROOT/$BACKUP_NAME"
 LOG_DIR="$BACKUP_ROOT/_logs"
 LOCK="$BACKUP_ROOT/.backup-home.lock"
 RSYNC="/opt/homebrew/bin/rsync"
@@ -155,13 +163,8 @@ log "log:    $LOG"
 log ""
 
 # ============================================================== Set A + Set C
-# Whole directories, mirrored. ~/.dotfiles is the bare dotfiles repo itself, so
-# the new Mac can clone from the backup with no network.
-SET_A=(
-  .claude .codex .agents .config .ssh .gnupg .appstoreconnect
-  Obsidian .scripts .bin .dotfiles
-)
-
+# Whole directories, mirrored. SET_A comes from config.sh; include the bare
+# dotfiles repo so the new Mac can restore with no network.
 for name in "${SET_A[@]}"; do
   src="$HOME_DIR/$name"
   if [[ ! -e "$src" ]]; then
@@ -173,13 +176,8 @@ for name in "${SET_A[@]}"; do
 done
 
 # ===================================================================== Set B
-# Loose top-level dot files, plus anything the dotfiles repo tracks at the top
-# level that sets A and B do not already cover (today: README.md).
-SET_B=(
-  .zshrc .zprofile .zshenv .profile .gitconfig .tmux.conf .vimrc
-  .zsh_plugins.txt .mailcap .mime.types .flutter .claude.json
-  .zsh_history .gitignore
-)
+# Loose top-level dot files (SET_B from config.sh), plus anything the dotfiles
+# repo tracks at the top level that sets A and B do not already cover.
 
 # Anything `git ls-files` lists must land in the backup. Everything under
 # .config/ and .scripts/ is already covered by set A; the rest is top-level.
@@ -217,7 +215,7 @@ done
 
 if [[ ${#SETB_SRC[@]} -gt 0 ]]; then
   # No --delete here on purpose: the sources are a file list, not a directory,
-  # so --delete would target everything else already in carson-mac/.
+  # so --delete would target everything else already in the backup.
   run_rsync "top-level files (${#SETB_SRC[@]})" \
     "${BASE_FLAGS[@]}" "${SETB_EXCLUDES[@]}" "${EXCLUDES[@]}" \
     "${SETB_SRC[@]}" "$DST/"
@@ -228,9 +226,8 @@ fi
 #
 # Why not `git ls-files` piped to --files-from: --files-from disables --delete's
 # ability to mirror. Why not a per-directory `--filter=':- .gitignore'`: repos
-# like personal/drover and personal/battle-buddies keep their ignores in
-# .git/info/exclude, which a per-directory filter cannot see. Missing drover's
-# alone would copy .claude/worktrees, 3.6G of build output.
+# keep their ignores in .git/info/exclude, which a per-directory filter cannot
+# see, and one missed exclude can pull gigabytes of build output.
 DEV="$HOME_DIR/Dev"
 MAX_TREE_KB=$((50 * 1024))   # non-git trees larger than this are skipped
 
@@ -246,10 +243,10 @@ else
   #   else  mixed: take its loose files and recurse into its subdirectories
   #
   # Descending top-down and stopping at the first .git is what keeps nested
-  # SwiftPM checkouts (drover/DroverKit/.build/checkouts/*/.git) and agent
-  # worktrees (drover/.claude/worktrees/*/.git) from being treated as repos of
-  # their own. A flat `find -name .git` finds 96 of them under ~/Dev; only 28
-  # are real project roots.
+  # SwiftPM checkouts (<repo>/.build/checkouts/*/.git) and agent worktrees
+  # (<repo>/.claude/worktrees/*/.git) from being treated as repos of their
+  # own. A flat `find -name .git` finds several times more .git dirs than
+  # there are project roots.
   classify() {
     local d="$1" child
     if [[ -e "$d/.git" ]]; then
@@ -330,10 +327,8 @@ else
     esac
   done <"$RECORDS"
 
-  # One gitignored file is wanted anyway: the local env for unraid-tower.
-  # tides_of_sorrow's android/local.properties is deliberately NOT included.
-  EXTRA_DEV=("personal/unraid-tower/.env.local")
-  for rel in "${EXTRA_DEV[@]}"; do
+  # Gitignored files wanted anyway (EXTRA_DEV from config.sh).
+  for rel in ${EXTRA_DEV[@]+"${EXTRA_DEV[@]}"}; do
     if [[ -e "$DEV/$rel" ]]; then
       ancestors "$rel"
       printf '+ /%s\n' "$(esc "$rel")" >>"$INCL"
@@ -375,30 +370,12 @@ fi
 # ===================================================================== Set E
 # Small machine state outside $HOME's dot dirs that restore-home.sh puts back:
 # launchd agents, app configs under ~/Library, and `defaults` domains exported
-# as plists. Lands under carson-mac/_extras/ mirroring $HOME, plus
-# _extras/defaults/<domain>.plist and _extras/lists/*.txt.
+# as plists (EXTRA_PATHS and DEFAULTS_DOMAINS from config.sh). Lands under
+# <backup>/_extras/ mirroring $HOME, plus _extras/defaults/<domain>.plist and
+# _extras/lists/*.txt.
 EXTRAS="$DST/_extras"
-EXTRA_PATHS=(
-  "Library/LaunchAgents/com.cunderw.daily-digest.plist"
-  "Library/LaunchAgents/com.cunderw.dream.plist"
-  "Library/LaunchAgents/com.cunderw.set-ha-token-env.plist"
-  "Library/LaunchAgents/Tmux.Start.plist"
-  ".local/bin/set-ha-token-env.sh"
-  "Library/Application Support/Claude/claude_desktop_config.json"
-  "Library/Application Support/Claude/Claude Extensions"
-  "Library/Application Support/Claude/Claude Extensions Settings"
-  "Library/Application Support/obsidian/obsidian.json"
-  "Library/Preferences/com.moonlight-stream.Moonlight.plist"
-  "Library/Developer/Xcode/UserData/KeyBindings"
-  "Library/Developer/Xcode/UserData/FontAndColorThemes"
-  "Library/Developer/Xcode/UserData/CodeSnippets"
-  "Library/Developer/Xcode/UserData/IDETemplateMacros.plist"
-  "Library/MobileDevice/Provisioning Profiles"
-  "Library/Spelling"
-  ".driverr"
-)
 EXTRA_SRC=()
-for rel in "${EXTRA_PATHS[@]}"; do
+for rel in ${EXTRA_PATHS[@]+"${EXTRA_PATHS[@]}"}; do
   if [[ -e "$HOME_DIR/$rel" ]]; then
     EXTRA_SRC+=("$HOME_DIR/./$rel")
   else
@@ -413,20 +390,15 @@ if [[ ${#EXTRA_SRC[@]} -gt 0 ]]; then
     "${BASE_FLAGS[@]}" --relative "${EXCLUDES[@]}" "${EXTRA_SRC[@]}" "$EXTRAS/"
 fi
 
-# `defaults` domains worth carrying: Dock layout, custom keyboard shortcuts,
-# global text/keyboard settings, Finder, Mac Mouse Fix. Exported as binary
-# plists; restore-home.sh imports them with `defaults import`.
-DEFAULTS_DOMAINS=(
-  com.apple.dock com.apple.symbolichotkeys com.apple.finder
-  com.nuebling.mac-mouse-fix com.apple.screencapture
-)
+# NSGlobalDomain plus DEFAULTS_DOMAINS, exported as binary plists that
+# restore-home.sh feeds to `defaults import`.
 log "=== defaults exports ==="
 if [[ $DRY_RUN -eq 1 ]]; then
-  log "would export: NSGlobalDomain ${DEFAULTS_DOMAINS[*]}"
+  log "would export: NSGlobalDomain ${DEFAULTS_DOMAINS[*]-}"
 else
   mkdir -p "$EXTRAS/defaults" "$EXTRAS/lists"
   defaults export -g "$EXTRAS/defaults/NSGlobalDomain.plist" || log "!! export NSGlobalDomain failed"
-  for d in "${DEFAULTS_DOMAINS[@]}"; do
+  for d in ${DEFAULTS_DOMAINS[@]+"${DEFAULTS_DOMAINS[@]}"}; do
     defaults export "$d" "$EXTRAS/defaults/$d.plist" 2>/dev/null || log "!! export $d failed (domain absent?)"
   done
   # Inventories a human reads during restore; nothing parses these.
@@ -437,6 +409,7 @@ else
   npm ls -g --depth=0 2>/dev/null >"$EXTRAS/lists/npm-global.txt" || true
   security find-identity -v -p codesigning 2>/dev/null >"$EXTRAS/lists/codesign-identities.txt" || true
   scutil --get ComputerName >"$EXTRAS/lists/computer-name.txt" 2>/dev/null || true
+  printf '%s\n' "$HOME_DIR" >"$EXTRAS/lists/home.txt"
   defaults read com.apple.dock persistent-apps 2>/dev/null | grep -E 'file-label|bundle-identifier' >"$EXTRAS/lists/dock-apps.txt" || true
   SYNCED=$((SYNCED + 1))
 fi

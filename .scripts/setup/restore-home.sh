@@ -1,22 +1,28 @@
 #!/usr/bin/env bash
 #
-# restore-home.sh — bring a fresh Mac up from /Volumes/MacStorage/Backups/carson-mac
-# (written by ~/.scripts/utils/backup-home.sh) plus the setup scripts next to
-# this file.
+# restore-home.sh — bring a fresh Mac up from a backup-home.sh mirror plus the
+# setup scripts next to this file.
 #
 # Before running, on the NEW Mac:
 #   1. Sign in to iCloud (Keychain, Photos, Drive) in System Settings.
 #   2. Sign in to the App Store app (mas cannot do it for you).
-#   3. Plug in MacStorage.
-#   4. Open Terminal and run:  /Volumes/MacStorage/Backups/carson-mac/.scripts/setup/restore-home.sh
+#   3. Plug in the backup drive.
+#   4. Open Terminal and run:  /Volumes/<drive>/Backups/<name>/.scripts/setup/restore-home.sh
 #
-# Steps run in order and each is idempotent. Re-run with --from N to resume
-# after a failure. --dry-run prints every step and runs nothing.
+# The drive, backup name and every machine-specific list come from
+# .config/home-backup/config.sh inside the backup. Steps run in order and each
+# is idempotent. Re-run with --from N to resume after a failure. --dry-run
+# prints every step and runs nothing.
 #
 set -euo pipefail
 
-VOL="/Volumes/MacStorage"
-SRC="$VOL/Backups/carson-mac"
+# The backup root is this script's great-grandparent: <backup>/.scripts/setup/restore-home.sh
+SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+CONFIG="$SRC/.config/home-backup/config.sh"
+[[ -f "$CONFIG" ]] || { echo "ERROR: $CONFIG not found; is $SRC a backup-home.sh mirror?" >&2; exit 1; }
+# shellcheck source=/dev/null
+source "$CONFIG"
+: "${VOL:?config.sh must set VOL}"
 EXTRAS="$SRC/_extras"
 RSYNC="${RSYNC:-/usr/bin/rsync}"   # openrsync is fine for a one-way copy
 UID_NUM="$(id -u)"
@@ -48,7 +54,9 @@ step() {  # step <title>; returns 1 (skip) when below --from
 [[ "$(uname -m)" == "arm64" ]] || fail "this script assumes Apple Silicon (/opt/homebrew)"
 mount | grep -q " on $VOL " || fail "$VOL is not mounted"
 [[ -d "$SRC/.dotfiles" ]] || fail "$SRC does not look like a backup-home.sh mirror"
-[[ "$HOME" == "/Users/cunderw" ]] || fail "backup paths assume /Users/cunderw, HOME is $HOME"
+if [[ -s "$EXTRAS/lists/home.txt" && "$(cat "$EXTRAS/lists/home.txt")" != "$HOME" ]]; then
+  fail "backup was taken from $(cat "$EXTRAS/lists/home.txt") but HOME is $HOME; absolute paths in configs would break"
+fi
 
 # =============================================================================
 if step "Xcode Command Line Tools (git, python3, rsync)"; then
@@ -60,7 +68,7 @@ if step "Xcode Command Line Tools (git, python3, rsync)"; then
 fi
 
 # =============================================================================
-if step "Copy the home mirror into \$HOME (dot dirs, dotfiles, Obsidian, Dev)"; then
+if step "Copy the home mirror into \$HOME"; then
   # -a keeps modes (.ssh 700/600). No --delete: never remove anything on the new
   # Mac. _extras is restored piecewise later, not copied to ~/_extras.
   run "$RSYNC" -a --info=progress2 \
@@ -110,7 +118,9 @@ if step "CLI tools that live in ~/.local/bin (not backed up)"; then
     run bash -c 'curl -fsSL https://claude.ai/install.sh | bash'
   fi
   run bash -c ". \"$HOME/.nvm/nvm.sh\" && npm install -g @openai/codex"
-  run "$RSYNC" -a "$EXTRAS/.local/bin/set-ha-token-env.sh" "$HOME/.local/bin/"
+  for f in ${LOCAL_BIN_FILES[@]+"${LOCAL_BIN_FILES[@]}"}; do
+    [[ -e "$EXTRAS/.local/bin/$f" ]] && run "$RSYNC" -a "$EXTRAS/.local/bin/$f" "$HOME/.local/bin/"
+  done
 fi
 
 # =============================================================================
@@ -153,20 +163,9 @@ if step "macOS defaults: imported domains, then macSetup.sh"; then
 fi
 
 # =============================================================================
-if step "App state under ~/Library (Claude desktop, Moonlight, Xcode, spelling, Obsidian vault list)"; then
-  for rel in \
-    "Library/Application Support/Claude/claude_desktop_config.json" \
-    "Library/Application Support/Claude/Claude Extensions" \
-    "Library/Application Support/Claude/Claude Extensions Settings" \
-    "Library/Application Support/obsidian/obsidian.json" \
-    "Library/Preferences/com.moonlight-stream.Moonlight.plist" \
-    "Library/Developer/Xcode/UserData/KeyBindings" \
-    "Library/Developer/Xcode/UserData/FontAndColorThemes" \
-    "Library/Developer/Xcode/UserData/CodeSnippets" \
-    "Library/Developer/Xcode/UserData/IDETemplateMacros.plist" \
-    "Library/MobileDevice/Provisioning Profiles" \
-    "Library/Spelling" \
-    ".driverr"; do
+if step "App state under ~/Library and other EXTRA_PATHS (launch agent plists are handled next)"; then
+  for rel in ${EXTRA_PATHS[@]+"${EXTRA_PATHS[@]}"}; do
+    [[ "$rel" == Library/LaunchAgents/* || "$rel" == .local/bin/* ]] && continue
     [[ -e "$EXTRAS/$rel" ]] || continue
     run mkdir -p "$(dirname "$HOME/$rel")"
     run "$RSYNC" -a "$EXTRAS/$rel" "$(dirname "$HOME/$rel")/"
@@ -174,28 +173,29 @@ if step "App state under ~/Library (Claude desktop, Moonlight, Xcode, spelling, 
 fi
 
 # =============================================================================
-if step "Vault automation: daily digest and dream launch agents, HA token env agent"; then
-  run "$HOME/Obsidian/PersonalVault/.system/install-digest.sh"
+if step "Launch agents and restore hooks from config.sh"; then
   run mkdir -p "$HOME/Library/LaunchAgents"
-  P="$EXTRAS/Library/LaunchAgents/com.cunderw.set-ha-token-env.plist"
-  if [[ -e "$P" ]]; then
+  for label in ${RESTORE_LAUNCH_AGENTS[@]+"${RESTORE_LAUNCH_AGENTS[@]}"}; do
+    P="$EXTRAS/Library/LaunchAgents/$label.plist"
+    [[ -e "$P" ]] || { echo "  missing $P"; continue; }
     run cp "$P" "$HOME/Library/LaunchAgents/"
-    run launchctl bootout "gui/$UID_NUM/com.cunderw.set-ha-token-env" 2>/dev/null || true
-    run launchctl bootstrap "gui/$UID_NUM" "$HOME/Library/LaunchAgents/com.cunderw.set-ha-token-env.plist"
-  fi
-  # Tmux.Start.plist is written by tmux-continuum itself once tmux runs with
-  # @continuum-boot on; nothing to copy.
-  run git -C "$HOME/Obsidian/PersonalVault" remote -v
+    run launchctl bootout "gui/$UID_NUM/$label" 2>/dev/null || true
+    run launchctl bootstrap "gui/$UID_NUM" "$HOME/Library/LaunchAgents/$label.plist"
+  done
+  for hook in ${RESTORE_HOOKS[@]+"${RESTORE_HOOKS[@]}"}; do
+    [[ -x "$HOME/$hook" ]] || { echo "  missing or not executable: ~/$hook"; continue; }
+    run "$HOME/$hook"
+  done
 fi
 
 # =============================================================================
 if step "Sanity checks"; then
   run git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" status --short
   run bash -lc 'command -v brew starship antidote fzf nvim tmux herdr claude codex gh; gh auth status'
-  run launchctl list | grep -E 'com.cunderw|Tmux' || true
+  run launchctl list | grep -vE '^\S+\s+\S+\s+com\.apple\.' || true
   echo
   echo "Simulators that existed before (create in Xcode > Devices if needed):"
-  cat "$EXTRAS/lists/simulators.txt" 2>/dev/null | grep -E 'Driverr|BB' | sed 's/^/  /' || true
+  sed 's/^/  /' "$EXTRAS/lists/simulators.txt" 2>/dev/null || true
   echo
   echo "Dock apps before (macSetup.sh + the imported com.apple.dock plist should match):"
   grep file-label "$EXTRAS/lists/dock-apps.txt" 2>/dev/null | sed 's/^/  /' || true
@@ -207,11 +207,9 @@ Left to do by hand:
   - Xcode: Settings > Accounts > sign in, then import the signing certificates
     you exported from the old Mac (Keychain Access > My Certificates > export .p12).
     iCloud Keychain does NOT carry developer certificate private keys.
-  - Raycast: sign in; settings come back through cloud sync.
-  - Google Chrome and Firefox: sign in for sync.
-  - Discord, Home Assistant app, Moonlight (re-pair if the plist did not carry the hosts).
-  - System Settings > Privacy & Security: grant Accessibility / Screen Recording to
-    Raycast, Mac Mouse Fix, Ghostty, Claude as they ask.
-  - Login items: Raycast, Mac Mouse Fix (add in System Settings > General > Login Items).
+  - Sign in to apps that sync their own settings (browsers, launcher, chat).
+  - System Settings > Privacy & Security: grant Accessibility / Screen Recording
+    to the apps that ask.
+  - System Settings > General > Login Items: re-add menu bar apps.
   - Log out and back in so the imported defaults (scroll direction, key repeat) apply.
 EOF

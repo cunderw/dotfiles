@@ -12,7 +12,7 @@ echo "Show ~/Library"
 chflags nohidden ~/Library
 
 echo "New finder windows open in home dir"
-defaults write com.apple.finder NewWindowTargetPath -string "file:///Users/cunderw"
+defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME"
 
 echo "Hide mounted volumes from desktop"
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
