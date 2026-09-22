@@ -53,8 +53,11 @@ defaults write com.apple.screencapture type -string "png"
 echo "Set the icon size of Dock items to 36 pixels"
 defaults write com.apple.dock tilesize -int 38
 
-echo "Automaticall hide and show dock"
-defaults write com.apple.dock autohide -bool true
+echo "Keep the dock visible"
+defaults write com.apple.dock autohide -bool false
+
+echo "Shorter delay before key repeat starts"
+defaults write NSGlobalDomain InitialKeyRepeat -int 25
 
 echo "Top left screen corner → Mission Control"
 defaults write com.apple.dock wvous-tl-corner -int 2

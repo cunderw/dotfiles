@@ -372,6 +372,76 @@ else
   fi
 fi
 
+# ===================================================================== Set E
+# Small machine state outside $HOME's dot dirs that restore-home.sh puts back:
+# launchd agents, app configs under ~/Library, and `defaults` domains exported
+# as plists. Lands under carson-mac/_extras/ mirroring $HOME, plus
+# _extras/defaults/<domain>.plist and _extras/lists/*.txt.
+EXTRAS="$DST/_extras"
+EXTRA_PATHS=(
+  "Library/LaunchAgents/com.cunderw.daily-digest.plist"
+  "Library/LaunchAgents/com.cunderw.dream.plist"
+  "Library/LaunchAgents/com.cunderw.set-ha-token-env.plist"
+  "Library/LaunchAgents/Tmux.Start.plist"
+  ".local/bin/set-ha-token-env.sh"
+  "Library/Application Support/Claude/claude_desktop_config.json"
+  "Library/Application Support/Claude/Claude Extensions"
+  "Library/Application Support/Claude/Claude Extensions Settings"
+  "Library/Application Support/obsidian/obsidian.json"
+  "Library/Preferences/com.moonlight-stream.Moonlight.plist"
+  "Library/Developer/Xcode/UserData/KeyBindings"
+  "Library/Developer/Xcode/UserData/FontAndColorThemes"
+  "Library/Developer/Xcode/UserData/CodeSnippets"
+  "Library/Developer/Xcode/UserData/IDETemplateMacros.plist"
+  "Library/MobileDevice/Provisioning Profiles"
+  "Library/Spelling"
+  ".driverr"
+)
+EXTRA_SRC=()
+for rel in "${EXTRA_PATHS[@]}"; do
+  if [[ -e "$HOME_DIR/$rel" ]]; then
+    EXTRA_SRC+=("$HOME_DIR/./$rel")
+  else
+    log "SKIP  _extras/$rel — not present"
+  fi
+done
+if [[ ${#EXTRA_SRC[@]} -gt 0 ]]; then
+  [[ $DRY_RUN -eq 1 ]] || mkdir -p "$EXTRAS"
+  # --relative with the /./ marker keeps the path below $HOME. No --delete:
+  # the source is a file list.
+  run_rsync "extras (${#EXTRA_SRC[@]})" \
+    "${BASE_FLAGS[@]}" --relative "${EXCLUDES[@]}" "${EXTRA_SRC[@]}" "$EXTRAS/"
+fi
+
+# `defaults` domains worth carrying: Dock layout, custom keyboard shortcuts,
+# global text/keyboard settings, Finder, Mac Mouse Fix. Exported as binary
+# plists; restore-home.sh imports them with `defaults import`.
+DEFAULTS_DOMAINS=(
+  com.apple.dock com.apple.symbolichotkeys com.apple.finder
+  com.nuebling.mac-mouse-fix com.apple.screencapture
+)
+log "=== defaults exports ==="
+if [[ $DRY_RUN -eq 1 ]]; then
+  log "would export: NSGlobalDomain ${DEFAULTS_DOMAINS[*]}"
+else
+  mkdir -p "$EXTRAS/defaults" "$EXTRAS/lists"
+  defaults export -g "$EXTRAS/defaults/NSGlobalDomain.plist" || log "!! export NSGlobalDomain failed"
+  for d in "${DEFAULTS_DOMAINS[@]}"; do
+    defaults export "$d" "$EXTRAS/defaults/$d.plist" 2>/dev/null || log "!! export $d failed (domain absent?)"
+  done
+  # Inventories a human reads during restore; nothing parses these.
+  xcrun simctl list devices available 2>/dev/null >"$EXTRAS/lists/simulators.txt" || true
+  ls "$HOME_DIR/.nvm/versions/node" 2>/dev/null >"$EXTRAS/lists/node-versions.txt" || true
+  cat "$HOME_DIR/.nvm/alias/default" 2>/dev/null >"$EXTRAS/lists/node-default.txt" || true
+  rustup toolchain list 2>/dev/null >"$EXTRAS/lists/rustup.txt" || true
+  npm ls -g --depth=0 2>/dev/null >"$EXTRAS/lists/npm-global.txt" || true
+  security find-identity -v -p codesigning 2>/dev/null >"$EXTRAS/lists/codesign-identities.txt" || true
+  scutil --get ComputerName >"$EXTRAS/lists/computer-name.txt" 2>/dev/null || true
+  defaults read com.apple.dock persistent-apps 2>/dev/null | grep -E 'file-label|bundle-identifier' >"$EXTRAS/lists/dock-apps.txt" || true
+  SYNCED=$((SYNCED + 1))
+fi
+echo | tee -a "$LOG"
+
 # ===================================================================== wrap up
 log "----------------------------------------"
 [[ $DRY_RUN -eq 1 ]] && log "DRY RUN complete — nothing was written."
