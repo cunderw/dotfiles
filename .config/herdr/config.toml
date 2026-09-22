@@ -76,6 +76,15 @@ focus_pane_down = ""
 focus_pane_up = ""
 focus_pane_right = ""
 
+# --- Pane swap ---------------------------------------------------------------
+# herdr's default (hardwired, absent from `herdr --default-config` and from
+# this file's keybinding search) is prefix+shift+hjkl. Made explicit here so
+# it survives any future default change and shows up in `keys-help.py`.
+swap_pane_left = "prefix+shift+h"
+swap_pane_down = "prefix+shift+j"
+swap_pane_up = "prefix+shift+k"
+swap_pane_right = "prefix+shift+l"
+
 # ============================================================================
 # Custom commands
 # ============================================================================
