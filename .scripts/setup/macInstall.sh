@@ -49,6 +49,14 @@ fi
 echo "Installing packages from $BREWFILE ..."
 brew bundle install --file="$BREWFILE"
 
+# --- Claude Code --------------------------------------------------------------
+# Not a brew formula; the native installer puts the binary in ~/.local/bin.
+
+if ! command -v claude >/dev/null 2>&1 && [ ! -x "$HOME/.local/bin/claude" ]; then
+    echo "Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 # --- Next steps -------------------------------------------------------------
 
 cat <<'EOF'
