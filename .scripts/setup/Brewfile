@@ -255,10 +255,10 @@ brew "wget"
 brew "xcodegen"
 # JavaScript package manager
 brew "yarn"
-# Display management tool
-cask "betterdisplay"
+cask "balenaetcher"
 # Anthropic's official Claude AI desktop app
 cask "claude"
+cask "discord"
 # Web browser
 cask "firefox"
 cask "font-fira-code"
@@ -271,8 +271,14 @@ cask "ghostty"
 cask "google-chrome"
 # Open-source video transcoder
 cask "handbrake-app"
+cask "mac-mouse-fix"
+cask "moonlight"
+cask "obsidian"
 # Control your tools with a few keystrokes
 cask "raycast"
+cask "sony-ps-remote-play"
+cask "ultimaker-cura"
+cask "vlc"
 mas "1Blocker", id: 1365531024
 mas "Developer", id: 640199958
 mas "Home Assistant", id: 1099568401
