@@ -24,10 +24,6 @@ echo "Show preview pane"
 defaults write com.apple.finder ShowPreviewPane -bool true
 defaults write com.apple.finder PreviewPaneWidth -int 172
 
-echo "Show connected servers in finder"
-defaults delete com.apple.sidebarlists networkbrowser
-defaults write com.apple.sidebarlists networkbrowser -array-add '<dict><key>CustomListItems</key><array/><key>CustomListProperties</key><dict><key>com.apple.NetworkBrowser.connectedEnabled</key><true/><key>com.apple.NetworkBrowser.bonjourEnabled</key><false/><key>com.apple.NetworkBrowser.backToMyMacEnabled</key><true/></dict><key>Controller</key><string>CustomListItems</string></dict>'
-
 echo "Keep folders At Top When Sorting By Name."
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
 
@@ -121,20 +117,21 @@ defaults write com.apple.finder ShowStatusBar -bool true
 # Safari & WebKit                                                             
 ###############################################################################
 
-echo "Set Safari’s home page to `about:blank` for faster loading"
-defaults write com.apple.Safari HomePage -string "about:blank"
-
-echo "Enable Safari’s debug menu"
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-
-# Make Safari’s search banners default to Contains instead of Starts With
-defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
-
-
-echo "Enabe the Develop menu and the Web Inspector in Safari"
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+# Safari's preferences live in its sandbox container, which `defaults` can only
+# write when the terminal app has Full Disk Access. Try once; if it fails, say
+# what to do instead of failing six more times.
+if defaults write com.apple.Safari HomePage -string "about:blank" 2>/dev/null; then
+  echo "Safari: home page about:blank, debug and Develop menus, Web Inspector"
+  defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+  defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+  defaults write com.apple.Safari IncludeDevelopMenu -bool true
+  defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+else
+  echo "Safari: skipped. Give this terminal Full Disk Access (System Settings >"
+  echo "  Privacy & Security) and re-run, or turn on Safari > Settings > Advanced >"
+  echo "  'Show features for web developers' by hand."
+fi
 
 echo "Add a context menu item for showing the Web Inspector in web views"
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
