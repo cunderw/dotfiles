@@ -1,7 +1,5 @@
 ohmyzsh/ohmyzsh path:lib/completion.zsh
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
-ohmyzsh/ohmyzsh path:plugins/docker
-ohmyzsh/ohmyzsh path:plugins/docker-compose
 ohmyzsh/ohmyzsh path:plugins/dotenv
 ohmyzsh/ohmyzsh path:plugins/flutter
 ohmyzsh/ohmyzsh path:plugins/git

@@ -1,3 +1,15 @@
+-- Resolves the markdownlint config to use for the current buffer: a
+-- project-local `.markdownlint.*` (searched upward from the buffer, so a repo
+-- can override/extend rules for itself) if one exists, else the global config.
+local function markdownlint_config()
+  local global = vim.fn.stdpath("config") .. "/.markdownlint.jsonc"
+  local found = vim.fs.find(
+    { ".markdownlint.jsonc", ".markdownlint.json", ".markdownlint.yaml", ".markdownlint.yml" },
+    { path = vim.fn.expand("%:p:h"), upward = true }
+  )[1]
+  return found or global
+end
+
 return {
   {
     "mfussenegger/nvim-lint",
@@ -6,7 +18,7 @@ return {
         ["markdownlint-cli2"] = {
           args = {
             "--config",
-            vim.fn.stdpath("config") .. "/.markdownlint.jsonc",
+            markdownlint_config,
             "-",
           },
         },
