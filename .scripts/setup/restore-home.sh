@@ -24,7 +24,7 @@ CONFIG="$SRC/.config/home-backup/config.sh"
 source "$CONFIG"
 : "${VOL:?config.sh must set VOL}"
 EXTRAS="$SRC/_extras"
-RSYNC="${RSYNC:-/usr/bin/rsync}"   # openrsync is fine for a one-way copy
+RSYNC="${RSYNC:-/opt/homebrew/bin/rsync}"   # openrsync is fine for a one-way copy
 UID_NUM="$(id -u)"
 
 FROM=1

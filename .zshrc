@@ -85,7 +85,7 @@ alias logs="find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1
 alias ls="ls --color=auto"
 alias pullrepos="for i in */.git; do ( echo $i; cd $i/..; git pull; ); done"
 alias up="cd $(eval printf '../'%.0s {1..$1}) && pwd;"
-alias zconfig="vim ~/.zshrc"
+alias zconfig="nvim ~/.zshrc"
 alias zreload="exec zsh"
 alias npmt="npm run test"
 alias ftest='flutter test | grep -F "[E]"'
@@ -111,6 +111,7 @@ alias cc=claude
 alias ccc='claude --continue'
 alias ccd='claude --dangerously-skip-permissions'
 alias ccr='claude --resume'
+alias awdl='sudo ifconfig awdl0 down && sudo ifconfig awdl0 up'
 
 ############################
 # Plugins
@@ -246,3 +247,6 @@ if [ -r "$NVM_DIR/alias/default" ]; then
   [ -n "$__nvm_dir" ] && [ -x "$__nvm_dir/bin/node" ] && export PATH="$__nvm_dir/bin:$PATH"
   unset __nvm_def __nvm_dir
 fi
+
+# opencode
+export PATH=/Users/cunderw/.opencode/bin:$PATH
