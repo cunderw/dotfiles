@@ -126,7 +126,7 @@ height = "80%"
 key = "prefix+shift+d"
 type = "shell"
 command = "~/.config/herdr/scripts/dev-layout.sh"
-description = "dev layout (nvim | claude / shell)"
+description = "dev layout (nvim / app | claude / shell, + git tab)"
 
 # ============================================================================
 # Installed plugins

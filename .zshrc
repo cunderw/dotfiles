@@ -89,6 +89,24 @@ alias zconfig="vim ~/.zshrc"
 alias zreload="exec zsh"
 alias npmt="npm run test"
 alias ftest='flutter test | grep -F "[E]"'
+# With no args, name the session "<project>" or "<project> (<branch>)" off main.
+claude() {
+  if (( $# == 0 )); then
+    local common project branch
+    common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+    if [[ -n $common ]]; then
+      project=${common:h:t}
+      branch=$(git branch --show-current 2>/dev/null)
+    else
+      project=${PWD:t}
+    fi
+    local name=$project
+    [[ -n $branch && $branch != main && $branch != master ]] && name="$project ($branch)"
+    command claude --model opus --name "$name"
+  else
+    command claude --model opus "$@"
+  fi
+}
 alias cc=claude
 alias ccc='claude --continue'
 alias ccd='claude --dangerously-skip-permissions'
@@ -130,6 +148,43 @@ if [[ -f $_antidote_path ]]; then
     source ${zsh_plugins}.zsh
 fi
 unset _antidote_path
+
+# Replaces the oh-my-zsh flutter plugin. That plugin runs `flutter
+# zsh-completion` in the background on EVERY shell start, and each `flutter`
+# call takes the SDK startup lock, so opening several panes at once (the herdr
+# dev layout opens five) produced "Waiting for another flutter command to
+# release the startup lock". Regenerate the completion only when the SDK
+# version file is newer than the cached completion.
+if (( $+commands[flutter] )); then
+    _flutter_comp="$ZSH_CACHE_DIR/completions/_flutter"
+    _flutter_ver="$HOME/flutter/bin/cache/flutter.version.json"
+    if [[ ! -f $_flutter_comp || $_flutter_ver -nt $_flutter_comp ]]; then
+        mkdir -p "${_flutter_comp:h}"
+        flutter zsh-completion < /dev/null >| "$_flutter_comp" &|
+    fi
+    # compinit has already run, so bind the completion by hand.
+    if [[ -f $_flutter_comp ]]; then
+        fpath+=("${_flutter_comp:h}")
+        autoload -Uz _flutter
+        compdef _flutter flutter
+    fi
+    unset _flutter_comp _flutter_ver
+
+    alias fl="flutter"
+    alias flattach="flutter attach"
+    alias flb="flutter build"
+    alias flchnl="flutter channel"
+    alias flc="flutter clean"
+    alias fldvcs="flutter devices"
+    alias fldoc="flutter doctor"
+    alias flpub="flutter pub"
+    alias flget="flutter pub get"
+    alias flr="flutter run"
+    alias flrd="flutter run --debug"
+    alias flrp="flutter run --profile"
+    alias flrr="flutter run --release"
+    alias flupgrd="flutter upgrade"
+fi
 
 
 #############################
