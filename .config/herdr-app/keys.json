@@ -112,7 +112,12 @@
     "ctrl-b 6": "tab.select:6",
     "ctrl-b 7": "tab.select:7",
     "ctrl-b 8": "tab.select:8",
-    "ctrl-b 9": "tab.select:9"
+    "ctrl-b 9": "tab.select:9",
+    "ctrl-b o": "mod.open:projects",
+    "ctrl-b ctrl-o": "mod.open:visible-files",
+    "ctrl-b i": "mod.open:issues",
+    "ctrl-b t": "mod.open:vault-panel",
+    "ctrl-b m": "mod.open:gate-board"
   },
   "terminal": {
     "cmd-c": "terminal.copy",
@@ -180,7 +185,12 @@
     "ctrl-b 7": "tab.select:7",
     "ctrl-b 8": "tab.select:8",
     "ctrl-b 9": "tab.select:9",
-    "ctrl-b ctrl-b": "send:\u0002"
+    "ctrl-b ctrl-b": "send:\u0002",
+    "ctrl-b o": "mod.open:projects",
+    "ctrl-b ctrl-o": "mod.open:visible-files",
+    "ctrl-b i": "mod.open:issues",
+    "ctrl-b t": "mod.open:vault-panel",
+    "ctrl-b m": "mod.open:gate-board"
   },
   "layout:my-main": {
     "ctrl-h": "smart-nav.left",

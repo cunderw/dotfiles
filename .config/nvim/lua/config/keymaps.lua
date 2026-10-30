@@ -192,7 +192,7 @@ if vim.env.HC_TERMINAL_ID and vim.env.HERDR_ENV ~= "1" then
     end
   end
 
-  function _G.herdr_open(path)
+  function _G.herdr_open(path, line)
     local win = open_target()
     if win then
       vim.api.nvim_set_current_win(win)
@@ -200,6 +200,10 @@ if vim.env.HC_TERMINAL_ID and vim.env.HERDR_ENV ~= "1" then
       vim.cmd("rightbelow vnew")
     end
     vim.cmd.edit(vim.fn.fnameescape(path))
+    if line and line > 0 then
+      pcall(vim.api.nvim_win_set_cursor, 0, { line, 0 })
+      vim.cmd("normal! zz")
+    end
     return ""
   end
 end
