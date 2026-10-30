@@ -133,3 +133,73 @@ vim.api.nvim_create_autocmd("DirChanged", {
 --   outside herdr -> plugins/tmux.lua (vim-tmux-navigator)
 -- Both declare them in a lazy `keys` table, which is what stops LazyVim
 -- claiming them on VeryLazy. Do not add them here as well.
+--
+-- The exception is the Herdr app (HC_TERMINAL_ID set, HERDR_ENV not), where
+-- neither plugin loads: its smart-nav mod sends these keys here, and at the
+-- last split we hand back with out-<dir>. Pane resize has no app command, so
+-- <M-H/J/K/L> only resize nvim splits there.
+if vim.env.HC_TERMINAL_ID and vim.env.HERDR_ENV ~= "1" then
+  local function nav(key, dir)
+    vim.keymap.set("n", "<C-" .. key .. ">", function()
+      local win = vim.api.nvim_get_current_win()
+      vim.cmd("wincmd " .. key)
+      if vim.api.nvim_get_current_win() == win then
+        vim.system({ "herdr-app", "do", "smart-nav.out-" .. dir })
+      end
+    end, { desc = "Navigate " .. dir .. " (nvim/herdr-app)" })
+  end
+  nav("h", "left")
+  nav("j", "down")
+  nav("k", "up")
+  nav("l", "right")
+
+  vim.keymap.set("n", "<M-H>", "<cmd>vertical resize -2<cr>", { desc = "Resize left" })
+  vim.keymap.set("n", "<M-J>", "<cmd>resize -2<cr>", { desc = "Resize down" })
+  vim.keymap.set("n", "<M-K>", "<cmd>resize +2<cr>", { desc = "Resize up" })
+  vim.keymap.set("n", "<M-L>", "<cmd>vertical resize +2<cr>", { desc = "Resize right" })
+
+  -- The my-files mod opens files here, at a socket named after the terminal.
+  local server = vim.fn.stdpath("state") .. "/herdr-" .. vim.env.HC_TERMINAL_ID .. ".sock"
+  vim.fn.delete(server)
+  pcall(vim.fn.serverstart, server)
+
+  local function is_tiled(win)
+    return vim.api.nvim_win_get_config(win).relative == ""
+  end
+
+  local function is_editor(win)
+    return is_tiled(win) and vim.bo[vim.api.nvim_win_get_buf(win)].buftype == ""
+  end
+
+  -- The window a file belongs in: this one, else any editor window, else the
+  -- widest one, so a dashboard is replaced and the file tree is not. Only a
+  -- tree on its own gets a split.
+  local function open_target()
+    local current = vim.api.nvim_get_current_win()
+    if is_editor(current) then
+      return current
+    end
+    local wins = vim.tbl_filter(is_tiled, vim.api.nvim_tabpage_list_wins(0))
+    local editor = vim.tbl_filter(is_editor, wins)[1]
+    if editor then
+      return editor
+    end
+    table.sort(wins, function(a, b)
+      return vim.api.nvim_win_get_width(a) > vim.api.nvim_win_get_width(b)
+    end)
+    if #wins > 1 then
+      return wins[1]
+    end
+  end
+
+  function _G.herdr_open(path)
+    local win = open_target()
+    if win then
+      vim.api.nvim_set_current_win(win)
+    else
+      vim.cmd("rightbelow vnew")
+    end
+    vim.cmd.edit(vim.fn.fnameescape(path))
+    return ""
+  end
+end

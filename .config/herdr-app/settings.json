@@ -1,0 +1,9 @@
+{
+  "zoom": 1.2,
+  "sounds": {
+    "enabled": true
+  },
+  "minimum_contrast": 1.0,
+  "theme": "tokyonight-black",
+  "font": "FiraMono Nerd Font Mono"
+}
