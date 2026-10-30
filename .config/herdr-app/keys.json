@@ -119,7 +119,8 @@
     "ctrl-b t": "mod.open:vault-panel",
     "ctrl-b m": "mod.open:gate-board",
     "ctrl-b r": "mod.open:ci",
-    "ctrl-b shift-e": "mod.open:pane-errors"
+    "ctrl-b shift-e": "mod.open:pane-errors",
+    "ctrl-b /": "layout.toggle:mod-keys"
   },
   "terminal": {
     "cmd-c": "terminal.copy",
@@ -194,7 +195,8 @@
     "ctrl-b t": "mod.open:vault-panel",
     "ctrl-b m": "mod.open:gate-board",
     "ctrl-b r": "mod.open:ci",
-    "ctrl-b shift-e": "mod.open:pane-errors"
+    "ctrl-b shift-e": "mod.open:pane-errors",
+    "ctrl-b /": "layout.toggle:mod-keys"
   },
   "layout:my-main": {
     "ctrl-h": "smart-nav.left",
