@@ -211,5 +211,25 @@
   "mod:visible-files": {
     "ctrl-j": "visible-files.next",
     "ctrl-k": "visible-files.prev"
+  },
+  "mod:issues": {
+    "ctrl-j": "issues.next",
+    "ctrl-k": "issues.prev"
+  },
+  "mod:gate-board": {
+    "ctrl-j": "gate-board.next",
+    "ctrl-k": "gate-board.prev"
+  },
+  "mod:vault-panel": {
+    "ctrl-j": "vault-panel.next",
+    "ctrl-k": "vault-panel.prev"
+  },
+  "mod:ci": {
+    "ctrl-j": "ci.next",
+    "ctrl-k": "ci.prev"
+  },
+  "mod:pane-errors": {
+    "ctrl-j": "pane-errors.next",
+    "ctrl-k": "pane-errors.prev"
   }
 }
