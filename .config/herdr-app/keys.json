@@ -203,5 +203,13 @@
     "ctrl-j": "smart-nav.down",
     "ctrl-k": "smart-nav.up",
     "ctrl-l": "smart-nav.right"
+  },
+  "mod:projects": {
+    "ctrl-j": "projects.next",
+    "ctrl-k": "projects.prev"
+  },
+  "mod:visible-files": {
+    "ctrl-j": "visible-files.next",
+    "ctrl-k": "visible-files.prev"
   }
 }
