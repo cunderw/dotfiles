@@ -144,7 +144,7 @@ if [[ -f $_antidote_path ]]; then
     # otherwise just source the pre-built (fast) plugin file.
     zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
     if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
-        antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
+        antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
     fi
     source ${zsh_plugins}.zsh
 fi
