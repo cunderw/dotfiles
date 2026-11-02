@@ -118,6 +118,7 @@
     "ctrl-b i": "mod.open:issues",
     "ctrl-b t": "mod.open:vault-panel",
     "ctrl-b m": "mod.open:gate-board",
+    "ctrl-b shift-v": "mod.open:branch-review-open",
     "ctrl-b r": "mod.open:ci",
     "ctrl-b shift-e": "mod.open:pane-errors",
     "ctrl-b /": "layout.toggle:mod-keys"
@@ -194,6 +195,7 @@
     "ctrl-b i": "mod.open:issues",
     "ctrl-b t": "mod.open:vault-panel",
     "ctrl-b m": "mod.open:gate-board",
+    "ctrl-b shift-v": "mod.open:branch-review-open",
     "ctrl-b r": "mod.open:ci",
     "ctrl-b shift-e": "mod.open:pane-errors",
     "ctrl-b /": "layout.toggle:mod-keys"
