@@ -143,12 +143,22 @@ if [[ -f $_antidote_path ]]; then
     # Static loading: only recompile the bundle when the plugin list changes,
     # otherwise just source the pre-built (fast) plugin file.
     zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
-    if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+    # Clones live in ~/Library/Caches/antidote, which cache cleaners can wipe.
+    # Rebuild (and re-clone) if any file the bundle sources is gone.
+    _antidote_missing=0
+    if [[ -f ${zsh_plugins}.zsh ]]; then
+        for _antidote_line in ${(M)${(f)"$(<${zsh_plugins}.zsh)"}:#source *}; do
+            _antidote_file=${(Q)${_antidote_line#source }}
+            [[ -f ${_antidote_file/\$HOME/$HOME} ]] || { _antidote_missing=1; break }
+        done
+    fi
+    if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]] || (( _antidote_missing )); then
+        (( _antidote_missing )) && print -u2 'antidote: plugin files missing, re-cloning...'
         antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
     fi
     source ${zsh_plugins}.zsh
 fi
-unset _antidote_path
+unset _antidote_path _antidote_missing _antidote_line _antidote_file
 
 # Replaces the oh-my-zsh flutter plugin. That plugin runs `flutter
 # zsh-completion` in the background on EVERY shell start, and each `flutter`
