@@ -248,5 +248,5 @@ if [ -r "$NVM_DIR/alias/default" ]; then
   unset __nvm_def __nvm_dir
 fi
 
-# opencode
-export PATH=/Users/cunderw/.opencode/bin:$PATH
+# Machine-only settings. Not tracked by dots.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
