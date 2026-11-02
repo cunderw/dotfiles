@@ -56,7 +56,15 @@ done
 
 # nvm setup
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+# --no-use skips `nvm use default`, which took ~1.8 s of each shell start.
+# The default node goes on PATH here so the npm/node plugins below find it.
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
+if [ -r "$NVM_DIR/alias/default" ]; then
+  __nvm_def="$(<"$NVM_DIR/alias/default")"
+  __nvm_dirs=("$NVM_DIR"/versions/node/v${__nvm_def#v}*(N/nOn))
+  [[ -x ${__nvm_dirs[1]}/bin/node ]] && export PATH="${__nvm_dirs[1]}/bin:$PATH" NVM_BIN="${__nvm_dirs[1]}/bin"
+  unset __nvm_def __nvm_dirs
+fi
 
 # ruby setup
 eval "$(rbenv init - zsh)"
