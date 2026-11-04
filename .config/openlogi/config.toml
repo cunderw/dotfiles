@@ -1,0 +1,217 @@
+schema_version = 11
+selected_device = "serial:2621ap4g0ut8"
+
+[app_settings]
+launch_at_login = true
+check_for_updates = true
+auto_install_updates = false
+update_prompt_seen = true
+show_in_menu_bar = true
+capture_mouse_events = true
+smooth_scroll = false
+vertical_scroll_sensitivity = 14
+app_icon = "openlogi"
+auto_download_assets = true
+asset_source = "automatic"
+thumbwheel_sensitivity = 14
+appearance = "system"
+ui_scale = "normal"
+device_view_mode = "grid"
+mouse_profile_target = "pointer"
+low_battery_notifications = true
+lock_key_notifications = true
+animate_desktop_switch = true
+
+[app_settings.momentum_scrolling]
+enabled = false
+pixels_per_notch = 28
+glide_shape = "smooth"
+max_glide_speed = 8000
+glide_ms = 400
+repeat_boost = 135
+
+[devices]
+
+[devices."serial:2621ap4g0ut8"]
+dpi = 2050
+
+[devices."serial:2621ap4g0ut8".identity]
+display_name = "MX Master 4"
+codename = "MX Master 4 for Mac"
+kind = "mouse"
+
+[devices."serial:2621ap4g0ut8".identity.model_info]
+entity_count = 4
+unit_id = [
+    0,
+    0,
+    0,
+    0,
+]
+model_ids = [
+    45122,
+    0,
+    0,
+]
+extended_model_id = 4
+
+[keyboard]
+
+[devices."serial:2621ap4g0ut8".identity.model_info.transports]
+usb = false
+equad = false
+btle = true
+bluetooth = false
+
+[devices."serial:2621ap4g0ut8".identity.capabilities]
+buttons = true
+pointer = true
+lighting = false
+scroll_inversion = true
+hires_wheel = true
+thumbwheel = true
+haptic_feedback = true
+haptic_panel = true
+dpi_gestures = true
+fn_lock = false
+os_layout = false
+report_rate = false
+backlight = false
+easy_switch = true
+virtual_thumbwheel = false
+pointer_scaling = false
+force_sensing = true
+disable_keys = false
+onboard_profiles = false
+button_spy = false
+sidetone = false
+
+[devices."serial:2621ap4g0ut8".bindings.HapticPanel.Up ]
+CustomShortcut = "Ctrl+Up"
+
+[devices."serial:2621ap4g0ut8".bindings.HapticPanel]
+
+[devices."serial:2621ap4g0ut8".bindings.HapticPanel.Down ]
+CustomShortcut = "Ctrl+Down"
+
+[devices."serial:2621ap4g0ut8".bindings]
+GestureButton = "ShowActionsRing"
+
+[devices."serial:2621ap4g0ut8".bindings.HapticPanel.Left ]
+CustomShortcut = "Ctrl+Left"
+
+[devices."serial:2621ap4g0ut8".bindings.HapticPanel.Right ]
+CustomShortcut = "Ctrl+Right"
+
+[devices."serial:2621ap4g0ut8".disabled_gestures.GestureButton]
+Up = "MissionControl"
+Down = "ShowDesktop"
+Left = "PrevTab"
+Right = "NextTab"
+Click = "AppExpose"
+
+[devices."serial:2621ap4g0ut8".momentum_scrolling]
+enabled = true
+pixels_per_notch = 28
+glide_shape = "smooth"
+max_glide_speed = 8000
+glide_ms = 400
+repeat_boost = 135
+
+[devices."serial:2621ap4g0ut8".links."direct:046d:b042".capabilities]
+buttons = true
+pointer = true
+lighting = false
+scroll_inversion = true
+hires_wheel = true
+thumbwheel = true
+haptic_feedback = true
+haptic_panel = true
+dpi_gestures = true
+fn_lock = false
+os_layout = false
+report_rate = false
+backlight = false
+easy_switch = true
+virtual_thumbwheel = false
+pointer_scaling = false
+force_sensing = true
+disable_keys = false
+onboard_profiles = false
+button_spy = false
+sidetone = false
+
+[devices."serial:2621ap4g0ut8".bindings.HapticPanel.Click ]
+CustomShortcut = "Ctrl+Up"
+
+[devices."unit:33394711".identity]
+display_name = "G502 HERO"
+codename = "G502 HERO Gaming Mouse"
+kind = "mouse"
+
+[devices."unit:33394711".identity.model_info]
+entity_count = 2
+unit_id = [
+    0,
+    0,
+    0,
+    0,
+]
+model_ids = [
+    49291,
+    0,
+    0,
+]
+extended_model_id = 0
+
+[devices."unit:33394711".identity.model_info.transports]
+usb = true
+equad = false
+btle = false
+bluetooth = false
+
+[devices."unit:33394711".identity.capabilities]
+buttons = false
+pointer = true
+lighting = true
+scroll_inversion = false
+hires_wheel = false
+thumbwheel = false
+haptic_feedback = false
+haptic_panel = false
+dpi_gestures = false
+fn_lock = false
+os_layout = false
+report_rate = true
+backlight = false
+easy_switch = false
+virtual_thumbwheel = false
+pointer_scaling = false
+force_sensing = false
+disable_keys = false
+onboard_profiles = true
+button_spy = true
+sidetone = false
+
+[devices."unit:33394711".links."direct:046d:c08b".capabilities]
+buttons = false
+pointer = true
+lighting = true
+scroll_inversion = false
+hires_wheel = false
+thumbwheel = false
+haptic_feedback = false
+haptic_panel = false
+dpi_gestures = false
+fn_lock = false
+os_layout = false
+report_rate = true
+backlight = false
+easy_switch = false
+virtual_thumbwheel = false
+pointer_scaling = false
+force_sensing = false
+disable_keys = false
+onboard_profiles = true
+button_spy = true
+sidetone = false
