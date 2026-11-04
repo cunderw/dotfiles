@@ -96,6 +96,8 @@ CustomShortcut = "Ctrl+Down"
 
 [devices."serial:2621ap4g0ut8".bindings]
 GestureButton = "ShowActionsRing"
+Back = "BrowserBack"
+Forward = "BrowserForward"
 
 [devices."serial:2621ap4g0ut8".bindings.HapticPanel.Left ]
 CustomShortcut = "Ctrl+Left"
