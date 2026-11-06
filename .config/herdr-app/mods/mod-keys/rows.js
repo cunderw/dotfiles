@@ -49,6 +49,12 @@ export function describe(recipe, mainJs) {
 }
 
 function target(action, user, self) {
+  // An object binding: {command, args}. A pane.split of a user mod counts as that mod's.
+  if (typeof action !== "string") {
+    const mod = action?.args?.mod;
+    if (action?.command === "pane.split" && user.has(mod)) return { mod, label: action.args.props?.view ?? "split" };
+    return null;
+  }
   let m = action.match(/^mod\.open:(.+)$/);
   if (m && user.has(m[1])) return { mod: m[1], label: "open" };
   m = action.match(/^layout\.(toggle|show):(.+)$/);
@@ -67,8 +73,10 @@ export function buildRows(keysJson, mods, { self = "mod-keys", layout = null } =
   for (const section of sections) {
     for (const [keys, action] of Object.entries(keysJson?.[section] ?? {})) {
       const t = target(action, user, self);
-      if (!t || seen.has(`${keys}\0${action}`)) continue;
-      seen.add(`${keys}\0${action}`);
+      // A helper named "<mod>-open" opens <mod>; list its keys under <mod>.
+      if (t && t.mod.endsWith("-open") && user.has(t.mod.slice(0, -5))) t.mod = t.mod.slice(0, -5);
+      if (!t || seen.has(`${keys}\0${JSON.stringify(action)}`)) continue;
+      seen.add(`${keys}\0${JSON.stringify(action)}`);
       if (!byMod.has(t.mod)) byMod.set(t.mod, []);
       byMod.get(t.mod).push({ keys, chord: chord(keys), action, label: t.label, section });
     }
@@ -78,7 +86,8 @@ export function buildRows(keysJson, mods, { self = "mod-keys", layout = null } =
     mod, description: desc.get(mod) ?? "",
     bindings: byMod.get(mod).sort((a, b) => a.label.localeCompare(b.label) || a.keys.localeCompare(b.keys)),
   }));
-  const noKey = mods.filter((m) => m.name !== self && !byMod.has(m.name))
+  const helper = (n) => n.endsWith("-open") && user.has(n.slice(0, -5));
+  const noKey = mods.filter((m) => m.name !== self && !byMod.has(m.name) && !helper(m.name))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((m) => ({ mod: m.name, description: m.description ?? "" }));
   const toggle = (byMod.get(self) ?? []).map((b) => b.chord);

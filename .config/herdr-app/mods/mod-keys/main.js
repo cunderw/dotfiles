@@ -8,6 +8,7 @@ import { buildRows, describe, userModNames } from "./rows.js";
 const SELF = "mod-keys";
 
 function perform(action) {
+  if (typeof action !== "string") return run(action.command, action.args ?? {});
   let m = action.match(/^mod\.open:(.+)$/);
   if (m) return run("mod.open", { name: m[1] });
   m = action.match(/^layout\.(toggle|show):(.+)$/);
@@ -74,7 +75,7 @@ export default class ModKeys extends View {
     for (const g of groups) {
       rows.push(modTitle(g.mod, g.description));
       for (const b of g.bindings) {
-        rows.push(h_flex().id(`row-${b.section}-${b.keys}-${b.action}`).px(8).h(26).gap(8).items_center().rounded(6)
+        rows.push(h_flex().id(`row-${b.section}-${b.keys}-${JSON.stringify(b.action)}`).px(8).h(26).gap(8).items_center().rounded(6)
           .cursor_pointer().hover((s) => s.bg(t.hover))
           .on_click(() => perform(b.action))
           .child(keycap(b.chord))

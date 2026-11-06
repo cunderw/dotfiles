@@ -117,6 +117,11 @@
     "ctrl-b ctrl-o": "mod.open:visible-files",
     "ctrl-b i": "mod.open:issues",
     "ctrl-b t": "mod.open:vault-panel",
+    "ctrl-b f": "mod.open:obsidian",
+    "ctrl-b h": "mod.open:sessions",
+    "ctrl-b u": "mod.open:claude-usage",
+    "ctrl-b y": { "command": "pane.split", "args": { "direction": "right", "mod": "claude-usage", "props": { "view": "panel" } } },
+    "ctrl-b a": { "command": "pane.split", "args": { "direction": "right", "mod": "obsidian", "props": { "view": "panel" } } },
     "ctrl-b m": "mod.open:gate-board",
     "ctrl-b shift-v": "mod.open:branch-review-open",
     "ctrl-b r": "mod.open:ci",
@@ -194,6 +199,11 @@
     "ctrl-b ctrl-o": "mod.open:visible-files",
     "ctrl-b i": "mod.open:issues",
     "ctrl-b t": "mod.open:vault-panel",
+    "ctrl-b f": "mod.open:obsidian",
+    "ctrl-b h": "mod.open:sessions",
+    "ctrl-b u": "mod.open:claude-usage",
+    "ctrl-b y": { "command": "pane.split", "args": { "direction": "right", "mod": "claude-usage", "props": { "view": "panel" } } },
+    "ctrl-b a": { "command": "pane.split", "args": { "direction": "right", "mod": "obsidian", "props": { "view": "panel" } } },
     "ctrl-b m": "mod.open:gate-board",
     "ctrl-b shift-v": "mod.open:branch-review-open",
     "ctrl-b r": "mod.open:ci",
@@ -206,6 +216,8 @@
     "ctrl-k": "smart-nav.up",
     "ctrl-l": "smart-nav.right"
   },
+  "mod:sessions": { "ctrl-j": "sessions.next", "ctrl-k": "sessions.prev", "ctrl-o": "sessions.fork", "ctrl-s": "sessions.send" },
+  "mod:obsidian": { "ctrl-j": "obsidian.next", "ctrl-k": "obsidian.prev", "alt-enter": "obsidian.send", "cmd-s": "obsidian.save", "ctrl-s": "obsidian.save" },
   "mod:projects": {
     "ctrl-j": "projects.next",
     "ctrl-k": "projects.prev"
