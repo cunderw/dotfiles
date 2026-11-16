@@ -1,5 +1,12 @@
 {
   "id": "root",
+  "window_blur": true,
+  "colors": {
+    "canvas": "#00000000",
+    "background": "#00000066",
+    "chrome": "#0b102440"
+  },
+  "terminal_opacity": 0,
   "cloned_from": {
     "name": "main",
     "version": "0.1.9"
