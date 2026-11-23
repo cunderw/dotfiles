@@ -1,8 +1,10 @@
 // ctrl-h/j/k/l: move through nvim splits and panes as one grid, wrapping at the edges.
 // nvim gets the key and comes back through out-<dir> when it runs out of splits.
+// alt-shift-h/j/k/l (resize-<dir>): nvim resizes a split on that axis if it has one
+// (herdr_resize over its server, see nvim keymaps.lua); otherwise the pane moves.
 // Sits in a 0px block so its commands stay live; draws nothing.
 import { View, div } from "gpui-kit";
-import { focused, hc, nextCommand, panes, run } from "herdr";
+import { exec, focused, hc, home, nextCommand, panes, run } from "herdr";
 
 const KEY = { left: "h", down: "j", up: "k", right: "l" };
 const OPPOSITE = { left: "right", down: "up", up: "down", right: "left" };
@@ -16,6 +18,7 @@ export default class SmartNav extends View {
         const c = await nextCommand();
         if (c in KEY) this.nav(c, cx);
         else if (c.startsWith("out-")) this.leave(c.slice(4), cx);
+        else if (c.startsWith("resize-")) await this.resize(c.slice(7));
         else if (c === "cycle-next") this.cycle(1);
         else if (c === "cycle-prev") this.cycle(-1);
       }
@@ -49,6 +52,16 @@ export default class SmartNav extends View {
     cx.timer.after(SETTLE_MS, (cx) => {
       if (left > 0 && focused()?.pane !== from) this.wrap(dir, left - 1, cx);
     });
+  }
+
+  async resize(dir) {
+    const p = this.current();
+    if (p?.program?.key === "nvim" && p.terminal && !p.terminal.includes("/")) {
+      const server = `${home()}/.local/state/nvim/herdr-${p.terminal}.sock`;
+      const r = await exec("nvim", ["--server", server, "--remote-expr", `v:lua.herdr_resize('${dir}')`]).catch(() => null);
+      if (r?.code === 0 && r.stdout.trim() === "nvim") return;
+    }
+    run("pane.resize", { direction: dir });
   }
 
   cycle(step) {

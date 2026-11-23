@@ -136,8 +136,9 @@ vim.api.nvim_create_autocmd("DirChanged", {
 --
 -- The exception is the Herdr app (HC_TERMINAL_ID set, HERDR_ENV not), where
 -- neither plugin loads: its smart-nav mod sends these keys here, and at the
--- last split we hand back with out-<dir>. Pane resize has no app command, so
--- <M-H/J/K/L> only resize nvim splits there.
+-- last split we hand back with out-<dir>. Resize (<M-H/J/K/L>) works the same
+-- way: smart-nav calls herdr_resize over the server below, which resizes an
+-- nvim split when one is on that axis and otherwise answers "pane".
 if vim.env.HC_TERMINAL_ID and vim.env.HERDR_ENV ~= "1" then
   local function nav(key, dir)
     vim.keymap.set("n", "<C-" .. key .. ">", function()
@@ -153,10 +154,33 @@ if vim.env.HC_TERMINAL_ID and vim.env.HERDR_ENV ~= "1" then
   nav("k", "up")
   nav("l", "right")
 
-  vim.keymap.set("n", "<M-H>", "<cmd>vertical resize -2<cr>", { desc = "Resize left" })
-  vim.keymap.set("n", "<M-J>", "<cmd>resize -2<cr>", { desc = "Resize down" })
-  vim.keymap.set("n", "<M-K>", "<cmd>resize +2<cr>", { desc = "Resize up" })
-  vim.keymap.set("n", "<M-L>", "<cmd>vertical resize +2<cr>", { desc = "Resize right" })
+  local resize = {
+    left = { "h", "l", "vertical resize -2" },
+    down = { "j", "k", "resize -2" },
+    up = { "j", "k", "resize +2" },
+    right = { "h", "l", "vertical resize +2" },
+  }
+  -- Returns "nvim" when it resized a split, "pane" when the Herdr pane should move.
+  function _G.herdr_resize(dir)
+    local a, b, cmd = unpack(resize[dir])
+    local cur = vim.fn.winnr()
+    if vim.fn.winnr(a) == cur and vim.fn.winnr(b) == cur then
+      return "pane"
+    end
+    vim.cmd(cmd)
+    return "nvim"
+  end
+  local function resize_key(key, dir)
+    vim.keymap.set("n", "<M-" .. key .. ">", function()
+      if herdr_resize(dir) == "pane" then
+        vim.system({ "herdr-app", "do", "pane.resize:" .. dir })
+      end
+    end, { desc = "Resize " .. dir .. " (nvim/herdr-app)" })
+  end
+  resize_key("H", "left")
+  resize_key("J", "down")
+  resize_key("K", "up")
+  resize_key("L", "right")
 
   -- The my-files mod opens files here, at a socket named after the terminal.
   local server = vim.fn.stdpath("state") .. "/herdr-" .. vim.env.HC_TERMINAL_ID .. ".sock"

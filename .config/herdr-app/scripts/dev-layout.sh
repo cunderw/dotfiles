@@ -10,6 +10,7 @@
 #   +-----------+-----------+
 #
 # Columns 44/56, rows 75/25, as weights: pane.split has no ratio.
+# Panes are named "<project>-<role>" (atc-connect-flutter-nvim, ...), as in the TUI.
 #
 #   usage: dev-layout.sh <pane> <terminal> <tab> <space> <cwd>
 
@@ -42,9 +43,29 @@ resize "$(jq -r .pane <<<"$app")" 0.25
 resize "$right_pane" 0.75
 resize "$(jq -r .pane <<<"$shell")" 0.25
 
+# The project is the main repo's folder name, so a worktree such as
+# ~/.herdr/worktrees/atc-connect-flutter/sc-123-foo still names the repo.
+# Outside git, the last part of the cwd.
+if common_dir=$(git -C "$cwd" rev-parse --path-format=absolute --git-common-dir 2>/dev/null); then
+  project=$(basename "$(dirname "$common_dir")")
+else
+  project=$(basename "$cwd")
+fi
+
+name() {
+  herdr-app do pane.rename "$(jq -nc --arg p "$1" --arg n "$project-$2" '{pane:$p,name:$n}')" >/dev/null
+}
+
+name "$base" nvim
+name "$right_pane" claude
+name "$(jq -r .pane <<<"$app")" app
+name "$(jq -r .pane <<<"$shell")" shell
+
 herdr-app do tab.rename --id "$tab" --name dev >/dev/null
-herdr-app do tab.new --name git --space "$space" --folder "$cwd" --argv '["lazygit"]' >/dev/null
-herdr-app do tab.select --id "$tab" >/dev/null
+# tab.new returns the terminal but not its pane; ls maps one to the other.
+git=$(herdr-app do tab.new --name git --space "$space" --folder "$cwd" --argv '["lazygit"]' --focus false)
+git_terminal=$(jq -r .terminal <<<"$git")
+name "$(herdr-app ls | jq -r --arg t "$git_terminal" '[.. | objects | select(.terminal? == $t) | .pane][0]')" git
 
 # A split of a pane this new starts in the space's folder, not the pane's.
 hc send "$(jq -r .terminal <<<"$shell")" "cd $(printf %q "$cwd") && clear" >/dev/null
